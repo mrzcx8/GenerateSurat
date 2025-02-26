@@ -20,15 +20,16 @@
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             margin: 0; 
-            padding: 0; 
+            padding: 20px; 
             background: linear-gradient(120deg, #e0f2fe, #f1f5f9);
             color: var(--text-color);
             min-height: 100vh;
+            transition: background 0.3s;
         }
         
         .container { 
             max-width: 800px; 
-            margin: 30px auto; 
+            margin: 20px auto; 
             background: white; 
             padding: 30px; 
             border-radius: 12px; 
@@ -48,12 +49,6 @@
             font-size: 28px;
         }
         
-        .subtitle {
-            color: var(--text-color);
-            opacity: 0.7;
-            margin-top: 8px;
-        }
-        
         .form-section {
             margin-bottom: 20px;
             background: var(--light-bg);
@@ -62,104 +57,59 @@
             border-left: 4px solid var(--primary-color);
         }
         
-        .form-section h3 {
-            margin-top: 0;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .dynamic-field {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         label { 
             display: block;
-            margin-bottom: 6px;
+            margin: 10px 0 5px;
             font-weight: 500;
-            color: var(--text-color);
         }
         
-        textarea, input, select { 
-            width: 100%; 
-            margin-bottom: 15px; 
-            padding: 12px; 
-            border-radius: 6px; 
-            border: 1px solid var(--border-color); 
-            font-family: inherit;
-            font-size: 14px;
-            background-color: white;
-            box-sizing: border-box;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        
-        textarea:focus, input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-        
-        textarea {
-            min-height: 100px;
-            resize: vertical;
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
         }
         
         .button-group {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            margin-top: 20px;
+            margin: 20px 0;
         }
         
-        button { 
-            padding: 12px; 
-            background: var(--primary-color); 
-            color: white; 
-            border: none; 
-            cursor: pointer; 
-            border-radius: 6px; 
-            font-weight: 600;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+        button {
+            padding: 12px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
         }
         
-        button:hover {
-            background: var(--secondary-color);
+        .theme-picker {
+            text-align: right;
+            margin: 10px 0;
         }
         
-        .output { 
-            margin-top: 30px; 
-            padding: 30px; 
-            border: 1px solid var(--border-color); 
-            background: white; 
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        
-        footer { 
-            text-align: center; 
-            margin-top: 30px; 
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-            font-size: 14px; 
-            color: var(--text-color); 
-            opacity: 0.7;
-        }
-        
-        .alamat { 
-            white-space: pre-line; 
-        }
-        
-        .surat-content { 
-            line-height: 1.8; 
-            text-align: justify; 
-        }
-        
-        .surat-header {
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 20px;
-            font-size: 18px;
+        .theme-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -167,317 +117,308 @@
     <div class="container">
         <div class="header">
             <h2>Generator Surat Rasmi</h2>
-            <p class="subtitle">Alat untuk menjana surat rasmi dengan mudah dan cepat</p>
-        </div>
-        
-        <!-- Pilihan Bahasa -->
-        <div class="form-section">
-            <h3><i class="fas fa-language"></i> Bahasa & Jenis Surat</h3>
-            
-            <label for="bahasa">Pilih Bahasa:</label>
-            <select id="bahasa" onchange="janaSurat()">
-                <option value="ms">Bahasa Melayu</option>
-                <option value="en">English</option>
-            </select>
-
-            <label for="jenisSurat">Pilih Jenis Surat:</label>
-            <select id="jenisSurat" onchange="janaSurat()">
-                <option value="permohonan">Permohonan</option>
-                <option value="aduan">Aduan</option>
-                <option value="jemputan">Jemputan</option>
-                <option value="rayuan">Rayuan</option>
-                <option value="penghargaan">Penghargaan</option>
-            </select>
-        </div>
-
-        <!-- Maklumat Pengirim -->
-        <div class="form-section">
-            <h3><i class="fas fa-user"></i> Maklumat Pengirim</h3>
-            
-            <label for="nama">Nama Pengirim:</label>
-            <input type="text" id="nama" placeholder="Masukkan nama anda" oninput="janaSurat()">
-            
-            <label for="alamat">Alamat Pengirim:</label>
-            <textarea id="alamat" placeholder="Masukkan alamat anda" oninput="janaSurat()"></textarea>
-        </div>
-        
-        <!-- Maklumat Surat -->
-        <div class="form-section">
-            <h3><i class="fas fa-envelope"></i> Maklumat Surat</h3>
-            
-            <label for="tarikh">Tarikh:</label>
-            <input type="date" id="tarikh" oninput="janaSurat()">
-
-            <label for="nomborRujukan">Jenis Nombor Rujukan:</label>
-            <select id="jenisRujukan" onchange="janaSurat()">
-                <option value="">Tiada</option>
-                <option value="bil">BIL</option>
-                <option value="ruj">RUJ</option>
-                <option value="ref">REF</option>
-                <option value="our-ref">OUR REF</option>
-            </select>
-            
-            <div id="rujukanField" style="display:none;">
-                <label for="nomborRujukan">Nombor Rujukan:</label>
-                <input type="text" id="nomborRujukan" placeholder="Masukkan nombor rujukan" oninput="janaSurat()">
-            </div>
-        </div>
-        
-        <!-- Maklumat Penerima -->
-        <div class="form-section">
-            <h3><i class="fas fa-user-tie"></i> Maklumat Penerima</h3>
-            
-            <label for="penerima">Nama Penerima:</label>
-            <input type="text" id="penerima" placeholder="Masukkan nama penerima" oninput="janaSurat()">
-
-            <label for="jawatanPenerima">Jawatan Penerima:</label>
-            <select id="jawatanPenerima" onchange="janaSurat()">
-                <option value="">Pilih Jawatan</option>
-                <option value="Pengarah">Pengarah</option>
-                <option value="Pengurus">Pengurus</option>
-                <option value="Ketua Jabatan">Ketua Jabatan</option>
-                <option value="Pengetua">Pengetua</option>
-                <option value="Guru Besar">Guru Besar</option>
-                <option value="Setiausaha">Setiausaha</option>
-                <option value="Pegawai Eksekutif">Pegawai Eksekutif</option>
-                <option value="Presiden">Presiden</option>
-                <option value="Dekan">Dekan</option>
-                <option value="Profesor">Profesor</option>
-                <option value="Yang DiPertua">Yang DiPertua</option>
-                <option value="custom">Lain-lain...</option>
-            </select>
-            
-            <div id="customJawatanField" style="display:none;">
-                <label for="customJawatan">Jawatan Khusus:</label>
-                <input type="text" id="customJawatan" placeholder="Masukkan jawatan khusus" oninput="janaSurat()">
+            <div class="theme-picker">
+                <button class="theme-btn" style="background: #2563eb" onclick="tukarTema('biru')"></button>
+                <button class="theme-btn" style="background: #10b981" onclick="tukarTema('hijau')"></button>
+                <button class="theme-btn" style="background: #ef4444" onclick="tukarTema('merah')"></button>
             </div>
         </div>
 
-        <!-- Butang Tindakan -->
+        <!-- Pilihan Surat -->
+        <div class="form-section">
+            <label>Pilih Jenis Surat:</label>
+            <select id="jenisSurat" onchange="toggleFields()">
+                <option value="">Sila Pilih</option>
+                <option value="permohonan_kerja">Surat Permohonan Kerja</option>
+                <option value="perletakan_jawatan">Surat Perletakan Jawatan</option>
+                <option value="permohonan_cuti">Surat Permohonan Cuti</option>
+                <option value="tuntutan_ganti_rugi">Surat Tuntutan Ganti Rugi</option>
+                <option value="aduan_rasmi">Surat Aduan Rasmi</option>
+                <option value="jemputan_rasmi">Surat Jemputan Rasmi</option>
+                <option value="rayuan_bantuan">Surat Rayuan Bantuan Kewangan</option>
+                <option value="penghargaan_staf">Surat Penghargaan kepada Staf</option>
+                <option value="permohonan_pinjaman">Surat Permohonan Pinjaman</option>
+                <option value="permohonan_projek">Surat Permohonan Projek</option>
+                <option value="pengecualian_bayaran">Surat Pengecualian Bayaran</option>
+                <option value="pindah_sekolah">Surat Pindah Sekolah</option>
+                <option value="tidak_hadir">Surat Tidak Hadir Ke Sekolah</option>
+                <option value="berhenti_kerja">Surat Berhenti Kerja</option>
+            </select>
+        </div>
+
+        <!-- Maklumat Asas -->
+        <div class="form-section">
+            <label>Nama Pengirim:</label>
+            <input type="text" id="nama" placeholder="Nama Penuh">
+            
+            <label>Alamat Pengirim:</label>
+            <textarea id="alamat" rows="3" placeholder="Alamat Penuh"></textarea>
+            
+            <label>Tarikh:</label>
+            <input type="date" id="tarikh">
+        </div>
+
+        <!-- Medan Dinamik -->
+        <div class="form-section">
+            <div id="dynamicFields">
+                <div class="dynamic-field" id="field_jawatan">
+                    <label>Jawatan Dipohon:</label>
+                    <input type="text" id="jawatan">
+                </div>
+
+                <div class="dynamic-field" id="field_sebab">
+                    <label>Sebab:</label>
+                    <textarea id="sebab" rows="2"></textarea>
+                </div>
+
+                <div class="dynamic-field" id="field_tempoh">
+                    <label>Tempoh:</label>
+                    <input type="text" id="tempoh" placeholder="Contoh: 23/03/2024 - 30/03/2024">
+                </div>
+
+                <div class="dynamic-field" id="field_jumlah">
+                    <label>Jumlah (RM):</label>
+                    <input type="number" id="jumlah">
+                </div>
+
+                <div class="dynamic-field" id="field_acara">
+                    <label>Butiran Acara:</label>
+                    <textarea id="acara" rows="3" placeholder="Tarikh, Masa & Tempat"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Output dan Tindakan -->
         <div class="button-group">
-            <button onclick="salinTeks()"><i class="far fa-copy"></i> Salin Teks</button>
-            <button onclick="pratontonPDF()"><i class="far fa-eye"></i> Pratonton PDF</button>
-            <button onclick="janaPDF()"><i class="fas fa-download"></i> Jana PDF</button>
+            <button onclick="pratontonPDF()"><i class="fas fa-eye"></i> Pratonton</button>
+            <button onclick="salinTeks()"><i class="fas fa-copy"></i> Salin</button>
+            <button onclick="janaPDF()"><i class="fas fa-download"></i> PDF</button>
         </div>
 
-        <!-- Output Surat -->
-        <div class="output" id="outputSurat"></div>
-        
-        <footer> Mr.Syah @ 2025 Hak Cipta Terpelihara</footer>
+        <div id="outputSurat" class="form-section"></div>
     </div>
 
     <script>
-        function janaSurat() {
-            let bahasa = document.getElementById("bahasa").value;
-            let jenis = document.getElementById("jenisSurat").value;
-            let nama = document.getElementById("nama").value || "[Nama Anda]";
-            let alamat = document.getElementById("alamat").value || "[Alamat Anda]";
-            let tarikh = document.getElementById("tarikh").value || "[Tarikh]";
-            let penerima = document.getElementById("penerima").value || "[Nama Penerima]";
-            
-            let jawatanPenerima = document.getElementById("jawatanPenerima").value;
-            if (jawatanPenerima === "custom") {
-                jawatanPenerima = document.getElementById("customJawatan").value || "";
-            }
-            
-            let jenisRujukan = document.getElementById("jenisRujukan").value;
-            let nomborRujukan = document.getElementById("nomborRujukan").value || "";
-            let rujukanText = "";
-            
-            if (jenisRujukan && nomborRujukan) {
-                rujukanText = `${jenisRujukan.toUpperCase()}: ${nomborRujukan}`;
-            }
-            
-            // Show/hide custom jawatan field
-            document.getElementById("customJawatanField").style.display = 
-                (document.getElementById("jawatanPenerima").value === "custom") ? "block" : "none";
-                
-            // Show/hide rujukan field
-            document.getElementById("rujukanField").style.display = 
-                (document.getElementById("jenisRujukan").value !== "") ? "block" : "none";
-            
-            // Set the subject based on letter type
-            let perkara = "";
-            let tajukSurat = "";
-            let isi = "";
-            
-            if (bahasa === "ms") {
-                if (jenis === "permohonan") {
-                    tajukSurat = "SURAT PERMOHONAN";
-                    perkara = "PERMOHONAN";
-                    isi = `
-                        <p>Saya, ${nama}, dengan hormatnya ingin memohon pertimbangan daripada pihak tuan/puan berkenaan dengan perkara di atas. Permohonan ini dibuat setelah saya meneliti dan mempertimbangkan segala aspek yang berkaitan dengan teliti.</p>
-                        <p>Sebagai makluman, saya telah meneliti segala syarat dan keperluan untuk permohonan ini dan mendapati bahawa saya layak untuk memohon. Saya juga telah menyediakan segala dokumen sokongan yang diperlukan untuk menyokong permohonan ini.</p>
-                        <p>Saya amat berharap agar pihak tuan/puan dapat memberikan perhatian dan pertimbangan yang sewajarnya terhadap permohonan ini. Segala kerjasama dan bantuan daripada pihak tuan/puan amatlah dihargai dan diucapkan berbanyak terima kasih. Saya juga bersedia untuk memberikan sebarang maklumat tambahan atau penjelasan lanjut sekiranya diperlukan oleh pihak tuan/puan.</p>
-                        <p>Saya berharap agar pihak tuan/puan dapat memberikan maklum balas secepat mungkin agar urusan ini dapat dilaksanakan dengan lancar dan berkesan. Sekian, terima kasih.</p>
-                    `;
-                } else if (jenis === "aduan") {
-                    tajukSurat = "SURAT ADUAN";
-                    perkara = "ADUAN";
-                    isi = `
-                        <p>Saya, ${nama}, dengan ini ingin membuat aduan rasmi berkenaan dengan perkara di atas. Isu ini telah memberi kesan yang negatif kepada saya dan juga pihak-pihak lain yang terlibat secara langsung dan tidak langsung.</p>
-                        <p>Permasalahan ini bermula pada [nyatakan tarikh/masa] dan telah berlarutan sehingga kini. Antara kesan negatif yang dialami termasuklah [nyatakan kesan-kesan negatif]. Saya telah berusaha untuk menyelesaikan isu ini secara peribadi tetapi tidak berjaya mendapat penyelesaian yang memuaskan.</p>
-                        <p>Oleh itu, saya berharap pihak tuan/puan dapat mengambil tindakan segera bagi menyelesaikan masalah ini demi kebaikan semua pihak yang terlibat. Saya ingin mencadangkan beberapa langkah penyelesaian yang boleh dipertimbangkan oleh pihak tuan/puan, iaitu [nyatakan cadangan-cadangan penyelesaian].</p>
-                        <p>Saya amat mengharapkan kerjasama dan tindakan segera daripada pihak tuan/puan dalam menangani isu ini. Segala tindakan yang diambil amatlah dihargai dan diucapkan berbanyak terima kasih. Sekian, terima kasih.</p>
-                    `;
-                } else if (jenis === "jemputan") {
-                    tajukSurat = "SURAT JEMPUTAN";
-                    perkara = "JEMPUTAN";
-                    isi = `
-                        <p>Saya, ${nama}, dengan segala hormatnya ingin menjemput pihak tuan/puan ke majlis berkaitan perkara di atas yang akan diadakan seperti butiran berikut:</p>
-                        <p>Tarikh: [nyatakan tarikh]</p>
-                        <p>Masa: [nyatakan masa]</p>
-                        <p>Tempat: [nyatakan lokasi]</p>
-                        <p>Kehadiran pihak tuan/puan amatlah dialu-alukan dan sudah pasti akan memeriahkan lagi majlis ini. Majlis ini diadakan bertujuan untuk [nyatakan tujuan majlis secara terperinci]. Program majlis adalah seperti yang dilampirkan bersama surat ini.</p>
-                        <p>Kami berharap kehadiran pihak tuan/puan dapat memberikan sumbangan yang bermakna kepada majlis ini dan juga dapat mengeratkan lagi hubungan antara kedua-dua pihak. Sekiranya pihak tuan/puan mempunyai sebarang pertanyaan, sila hubungi [nyatakan nama dan nombor telefon].</p>
-                        <p>Sila sahkan kehadiran pihak tuan/puan sebelum [nyatakan tarikh akhir pengesahan]. Sekian, jemputan ini disampaikan dengan penuh harapan bahawa pihak tuan/puan dapat hadir ke majlis ini. Terima kasih.</p>
-                    `;
-                } else if (jenis === "rayuan") {
-                    tajukSurat = "SURAT RAYUAN";
-                    perkara = "RAYUAN";
-                    isi = `
-                        <p>Saya, ${nama}, dengan rendah hati ingin mengemukakan rayuan berkenaan dengan perkara di atas. Rayuan ini dibuat setelah saya meneliti dan mempertimbangkan segala aspek yang berkaitan dengan teliti dan mendalam.</p>
-                        <p>Sebagai makluman, saya telah menerima keputusan yang dibuat pada [nyatakan tarikh keputusan]. Walau bagaimanapun, saya percaya bahawa keputusan tersebut perlu dinilai semula berdasarkan faktor-faktor berikut: [nyatakan faktor-faktor yang menyokong rayuan].</p>
-                        <p>Saya berharap pihak tuan/puan dapat mempertimbangkan semula keputusan yang telah dibuat dan memberikan pertimbangan yang sewajarnya terhadap rayuan ini. Saya juga ingin mencadangkan beberapa langkah penyelesaian yang boleh dipertimbangkan, iaitu [nyatakan cadangan-cadangan penyelesaian].</p>
-                        <p>Saya amat mengharapkan belas ihsan, kerjasama dan pertimbangan daripada pihak tuan/puan dalam hal ini. Segala tindakan dan pertimbangan yang diberikan amatlah dihargai dan diucapkan berbanyak terima kasih. Sekian, terima kasih.</p>
-                    `;
-                } else if (jenis === "penghargaan") {
-                    tajukSurat = "SURAT PENGHARGAAN";
-                    perkara = "PENGHARGAAN";
-                    isi = `
-                        <p>Saya, ${nama}, dengan ini ingin merakamkan setinggi-tinggi penghargaan dan ucapan terima kasih kepada pihak tuan/puan atas segala usaha, bantuan dan sumbangan yang telah diberikan berkaitan dengan perkara di atas. Jasa dan pengorbanan pihak tuan/puan amatlah dihargai dan akan dikenang sepanjang masa.</p>
-                        <p>Pihak tuan/puan telah memberikan sumbangan yang sangat bermakna dalam [nyatakan konteks sumbangan] yang telah membawa kepada kejayaan [nyatakan pencapaian atau hasil]. Tanpa sokongan dan kerjasama daripada pihak tuan/puan, sudah pasti kami tidak akan dapat mencapai kejayaan seperti yang telah dicapai.</p>
-                        <p>Saya juga ingin mengambil kesempatan ini untuk menyatakan bahawa sokongan dan kerjasama daripada pihak tuan/puan telah memberikan impak yang sangat positif kepada [nyatakan kesan positif secara terperinci]. Kami berharap agar hubungan kerjasama yang telah terjalin antara kedua-dua pihak dapat diteruskan pada masa hadapan.</p>
-                        <p>Sekali lagi, sekalung penghargaan dan jutaan terima kasih diucapkan kepada pihak tuan/puan atas segala bantuan dan sokongan yang telah diberikan. Semoga hubungan baik ini akan terus berkekalan dan semakin erat pada masa akan datang. Sekian, terima kasih.</p>
-                    `;
-                }
-            } else if (bahasa === "en") {
-                if (jenis === "permohonan") {
-                    tajukSurat = "APPLICATION LETTER";
-                    perkara = "APPLICATION";
-                    isi = `
-                        <p>I, ${nama}, respectfully wish to request consideration from you regarding the above matter. This application is made after I have thoroughly reviewed and considered all relevant aspects.</p>
-                        <p>For your information, I have examined all the requirements and criteria for this application and found that I am eligible to apply. I have also prepared all the necessary supporting documents to strengthen this application.</p>
-                        <p>I sincerely hope that you can give due attention and consideration to this application. Any cooperation and assistance from you is greatly appreciated and I extend my heartfelt thanks. I am also ready to provide any additional information or further clarification if required by you.</p>
-                        <p>I hope that you can provide feedback as soon as possible so that this matter can be carried out smoothly and effectively. Thank you.</p>
-                    `;
-                } else if (jenis === "aduan") {
-                    tajukSurat = "COMPLAINT LETTER";
-                    perkara = "COMPLAINT";
-                    isi = `
-                        <p>I, ${nama}, hereby wish to make an official complaint regarding the above matter. This issue has had a negative impact on me and other parties involved, both directly and indirectly.</p>
-                        <p>This problem began on [state date/time] and has persisted until now. Among the negative effects experienced include [state negative effects]. I have attempted to resolve this issue personally but have not been able to reach a satisfactory resolution.</p>
-                        <p>Therefore, I hope that you can take immediate action to resolve this issue for the benefit of all parties involved. I would like to suggest several solutions that can be considered by you, namely [state suggested solutions].</p>
-                        <p>I greatly appreciate your cooperation and prompt action in addressing this issue. Any action taken is highly appreciated and I extend my sincere thanks. Thank you.</p>
-                    `;
-                } else if (jenis === "jemputan") {
-                    tajukSurat = "INVITATION LETTER";
-                    perkara = "INVITATION";
-                    isi = `
-                        <p>I, ${nama}, respectfully wish to invite you to the event regarding the above matter which will be held with the following details:</p>
-                        <p>Date: [state date]</p>
-                        <p>Time: [state time]</p>
-                        <p>Venue: [state location]</p>
-                        <p>Your presence is greatly welcomed and will certainly enliven this event. This event is held for the purpose of [state the purpose of the event in detail]. The program of the event is as attached with this letter.</p>
-                        <p>We hope that your presence can provide a meaningful contribution to this event and also strengthen the relationship between both parties. If you have any inquiries, please contact [state name and phone number].</p>
-                        <p>Please confirm your attendance before [state confirmation deadline]. This invitation is extended with full hope that you will be able to attend this event. Thank you.</p>
-                    `;
-                } else if (jenis === "rayuan") {
-                    tajukSurat = "APPEAL LETTER";
-                    perkara = "APPEAL";
-                    isi = `
-                        <p>I, ${nama}, humbly wish to submit an appeal regarding the above matter. This appeal is made after I have thoroughly and carefully reviewed and considered all relevant aspects.</p>
-                        <p>For your information, I received the decision made on [state date of decision]. However, I believe that the decision should be reassessed based on the following factors: [state factors supporting the appeal].</p>
-                        <p>I hope that you can reconsider the decision that was made and give due consideration to this appeal. I would also like to suggest several solutions that can be considered, namely [state suggested solutions].</p>
-                        <p>I sincerely hope for your compassion, cooperation, and consideration in this matter. Any action and consideration given is highly appreciated and I extend my heartfelt thanks. Thank you.</p>
-                    `;
-                } else if (jenis === "penghargaan") {
-                    tajukSurat = "APPRECIATION LETTER";
-                    perkara = "APPRECIATION";
-                    isi = `
-                        <p>I, ${nama}, hereby wish to express my highest appreciation and gratitude to you for all the efforts, assistance, and contributions that have been made regarding the above matter. Your services and sacrifices are greatly appreciated and will be remembered always.</p>
-                        <p>You have provided a very meaningful contribution in [state context of contribution] which has led to the success of [state achievement or outcome]. Without your support and cooperation, we certainly would not have been able to achieve the success that has been achieved.</p>
-                        <p>I would also like to take this opportunity to state that your support and cooperation have had a very positive impact on [state positive impact in detail]. We hope that the cooperative relationship that has been established between both parties can continue in the future.</p>
-                        <p>Once again, I extend my appreciation and millions of thanks to you for all the help and support that has been given. May this good relationship continue to be preserved and strengthened in the future. Thank you.</p>
-                    `;
-                }
-            }
-            
-            // Build the template
-            let template = `
-                <div class="surat-header">${tajukSurat}</div>
-                <p class="alamat">${alamat}</p>
-                <p>${tarikh}</p>
-            `;
-            
-            // Only show reference number if present
-            if (rujukanText) {
-                template += `<p>${rujukanText}</p>`;
-            }
-            
-            template += `<p>Kepada,<br>${penerima}`;
-            
-            // Only show position if selected
-            if (jawatanPenerima) {
-                template += `<br>${jawatanPenerima}`;
-            }
-            
-            template += `</p>
-                <p><strong>Perkara: ${perkara}</strong></p>
-                <div class="surat-content">${isi}</div>
-                <p>Yang benar,<br>${nama}</p>
-            `;
-            
-            document.getElementById("outputSurat").innerHTML = template;
+        // Fungsi Tema
+        function tukarTema(warna) {
+            const root = document.documentElement;
+            const colors = {
+                biru: { primary: '#2563eb', secondary: '#1e40af' },
+                hijau: { primary: '#10b981', secondary: '#059669' },
+                merah: { primary: '#ef4444', secondary: '#dc2626' }
+            };
+            root.style.setProperty('--primary-color', colors[warna].primary);
+            root.style.setProperty('--secondary-color', colors[warna].secondary);
         }
 
+        // Fungsi Toggle Medan
+        function toggleFields() {
+            const jenis = document.getElementById('jenisSurat').value;
+            const fields = document.querySelectorAll('.dynamic-field');
+            fields.forEach(field => field.style.display = 'none');
+
+            const fieldMap = {
+                'permohonan_kerja': ['jawatan'],
+                'perletakan_jawatan': ['sebab'],
+                'permohonan_cuti': ['tempoh', 'sebab'],
+                'tuntutan_ganti_rugi': ['jumlah', 'sebab'],
+                'aduan_rasmi': ['sebab'],
+                'jemputan_rasmi': ['acara'],
+                'rayuan_bantuan': ['jumlah', 'sebab'],
+                'permohonan_pinjaman': ['jumlah', 'sebab'],
+                'permohonan_projek': ['sebab'],
+                'pengecualian_bayaran': ['sebab'],
+                'pindah_sekolah': ['sebab'],
+                'tidak_hadir': ['sebab'],
+                'berhenti_kerja': ['sebab']
+            };
+
+            if (fieldMap[jenis]) {
+                fieldMap[jenis].forEach(field => {
+                    document.getElementById(`field_${field}`).style.display = 'block';
+                });
+            }
+            janaSurat();
+        }
+
+        // Fungsi Jana Surat
+        function janaSurat() {
+            const jenis = document.getElementById('jenisSurat').value;
+            const data = {
+                nama: document.getElementById('nama').value || '[NAMA]',
+                alamat: document.getElementById('alamat').value || '[ALAMAT]',
+                tarikh: document.getElementById('tarikh').value || '[TARIKH]',
+                jawatan: document.getElementById('jawatan').value,
+                sebab: document.getElementById('sebab').value,
+                tempoh: document.getElementById('tempoh').value,
+                jumlah: document.getElementById('jumlah').value,
+                acara: document.getElementById('acara').value
+            };
+
+            let isi = '';
+            switch(jenis) {
+                case 'permohonan_kerja':
+                    isi = `
+                        <p>Yang Dihormati,</p>
+                        <p>Saya, ${data.nama}, dengan hormatnya ingin memohon jawatan ${data.jawatan} di syarikat tuan/puan. Saya percaya bahawa saya memenuhi kriteria yang diperlukan berdasarkan pengalaman dan kemahiran yang saya miliki.</p>
+                        <p>Saya telah melampirkan resume dan dokumen sokongan untuk pertimbangan tuan/puan. Saya berharap dapat dipanggil untuk temu duga.</p>
+                        <p>Sekian, terima kasih.</p>
+                    `;
+                    break;
+
+                case 'perletakan_jawatan':
+                    isi = `
+                        <p>Yang Dihormati,</p>
+                        <p>Saya, ${data.nama}, ingin memaklumkan hasrat untuk meletakkan jawatan sebagai ${data.jawatan} berkuat kuasa pada ${data.tarikh}.</p>
+                        <p>Alasan saya adalah ${data.sebab}. Saya berharap pihak tuan/puan dapat memahami keputusan ini.</p>
+                        <p>Sekian, terima kasih.</p>
+                    `;
+                    break;
+
+                case 'permohonan_cuti':
+                    isi = `
+                        <p>Yang Dihormati,</p>
+                        <p>Saya, ${data.nama}, ingin memohon cuti selama ${data.tempoh} atas sebab ${data.sebab}.</p>
+                        <p>Saya telah memastikan semua tugas semasa akan diselesaikan sebelum cuti saya bermula.</p>
+                        <p>Sekian, terima kasih.</p>
+                    `;
+                    break;
+
+                case 'tuntutan_ganti_rugi':
+                    isi = `
+                        <p>Yang Dihormati,</p>
+                        <p>Saya, ${data.nama}, ingin membuat tuntutan ganti rugi sebanyak RM${data.jumlah} atas ${data.sebab}.</p>
+                        <p>Saya telah melampirkan dokumen sokongan untuk pertimbangan tuan/puan.</p>
+                        <p>Sekian, terima kasih.</p>
+                    `;
+                    break;
+
+                case 'aduan_rasmi':
+                    isi = `
+                        <p>Yang Dihormati,</p>
+                        <p>Saya, ${data.nama}, ingin membuat aduan rasmi berkenaan ${data.sebab}.</p>
+                        <p>Saya berharap pihak tuan/puan dapat mengambil tindakan segera.</p>
+                        <p>Sekian, terima kasih.</p>
+                    `;
+                    break;
+
+                case 'jemputan_rasmi':
+                    isi = `
+                        <p>Yang Dihormati,</p>
+                        <p>Saya, ${data.nama}, ingin menjemput tuan/puan ke acara berikut:</p>
+                        <p>${data.acara}</p>
+                        <p>Kehadiran tuan/puan amatlah dihargai.</p>
+                        <p>Sekian, terima kasih.</p>
+                    `;
+                    break;
+
+                case 'rayuan_bantuan':
+                    isi = `
+                        <p>Yang Dihormati,</p>
+                        <p>Saya, ${data.nama}, ingin memohon bantuan kewangan sebanyak RM${data.jumlah} atas sebab ${data.sebab}.</p>
+                        <p>Saya telah melampirkan dokumen sokongan untuk pertimbangan tuan/puan.</p>
+                        <p>Sekian, terima kasih.</p>
+                    `;
+                    break;
+
+                case 'penghargaan_staf':
+                    isi = `
+                        <p>Yang Dihormati,</p>
+                        <p>Saya, ${data.nama}, ingin mengucapkan penghargaan kepada ${data.jawatan} atas ${data.sebab}.</p>
+                        <p>Sekian, terima kasih.</p>
+                    `;
+                    break;
+
+                case 'permohonan_pinjaman':
+                    isi = `
+                        <p>Yang Dihormati,</p>
+                        <p>Saya, ${data.nama}, ingin memohon pinjaman sebanyak RM${data.jumlah} atas sebab ${data.sebab}.</p>
+                        <p>Sekian, terima kasih.</p>
+                    `;
+                    break;
+
+                case 'permohonan_projek':
+                    isi = `
+                        <p>Yang Dihormati,</p>
+                        <p>Saya, ${data.nama}, ingin memohon kelulusan projek ${data.sebab}.</p>
+                        <p>Sekian, terima kasih.</p>
+                    `;
+                    break;
+
+                case 'pengecualian_bayaran':
+                    isi = `
+                        <p>Yang Dihormati,</p>
+                        <p>Saya, ${data.nama}, ingin memohon pengecualian bayaran atas sebab ${data.sebab}.</p>
+                        <p>Sekian, terima kasih.</p>
+                    `;
+                    break;
+
+                case 'pindah_sekolah':
+                    isi = `
+                        <p>Yang Dihormati,</p>
+                        <p>Saya, ${data.nama}, ingin memohon pindah sekolah atas sebab ${data.sebab}.</p>
+                        <p>Sekian, terima kasih.</p>
+                    `;
+                    break;
+
+                case 'tidak_hadir':
+                    isi = `
+                        <p>Yang Dihormati,</p>
+                        <p>Saya, ${data.nama}, ingin memaklumkan ketidakhadiran ke sekolah atas sebab ${data.sebab}.</p>
+                        <p>Sekian, terima kasih.</p>
+                    `;
+                    break;
+
+                case 'berhenti_kerja':
+                    isi = `
+                        <p>Yang Dihormati,</p>
+                        <p>Saya, ${data.nama}, ingin memaklumkan hasrat untuk berhenti kerja atas sebab ${data.sebab}.</p>
+                        <p>Sekian, terima kasih.</p>
+                    `;
+                    break;
+
+                default:
+                    isi = `<p>Sila pilih jenis surat dan isi maklumat yang diperlukan.</p>`;
+            }
+
+            document.getElementById('outputSurat').innerHTML = `
+                <h3>Surat ${document.getElementById('jenisSurat').selectedOptions[0].text}</h3>
+                <p>${data.alamat}</p>
+                <p>Tarikh: ${data.tarikh}</p>
+                <div class="surat-content">${isi}</div>
+                <p>Yang benar,<br>${data.nama}</p>
+            `;
+        }
+
+        // Fungsi Utiliti
         function salinTeks() {
-            let teks = document.getElementById("outputSurat").innerText;
-            navigator.clipboard.writeText(teks).then(() => {
-                alert("Teks surat telah disalin!");
-            });
+            const teks = document.getElementById('outputSurat').innerText;
+            navigator.clipboard.writeText(teks);
+            alert('Teks telah disalin!');
         }
 
         function pratontonPDF() {
             const { jsPDF } = window.jspdf;
-            let doc = new jsPDF();
-            let content = document.getElementById("outputSurat").innerText;
-            let lines = doc.splitTextToSize(content, 180); // Adjust the width of the text
-            doc.setFontSize(12);
-            doc.text(20, 20, lines);
-            doc.output('dataurlnewwindow'); // Pratonton PDF dalam tab baharu
+            const doc = new jsPDF();
+            doc.text(document.getElementById('outputSurat').innerText, 10, 10);
+            doc.output('dataurlnewwindow');
         }
 
         function janaPDF() {
             const { jsPDF } = window.jspdf;
-            let doc = new jsPDF();
-            let content = document.getElementById("outputSurat").innerText;
-            let lines = doc.splitTextToSize(content, 180); // Adjust the width of the text
-            doc.setFontSize(12);
-            doc.text(20, 20, lines);
-            doc.save("Surat_Rasmi.pdf");
+            const doc = new jsPDF();
+            doc.text(document.getElementById('outputSurat').innerText, 10, 10);
+            doc.save('surat_rasmi.pdf');
         }
 
-        // Event listeners for custom fields
-        document.getElementById("jawatanPenerima").addEventListener("change", function() {
-            document.getElementById("customJawatanField").style.display = 
-                (this.value === "custom") ? "block" : "none";
-            janaSurat();
-        });
-        
-        document.getElementById("jenisRujukan").addEventListener("change", function() {
-            document.getElementById("rujukanField").style.display = 
-                (this.value !== "") ? "block" : "none";
-            janaSurat();
+        // Event Listeners
+        document.querySelectorAll('input, textarea, select').forEach(element => {
+            element.addEventListener('input', janaSurat);
         });
 
-        // Set default date to today
-        window.onload = function() {
-            const today = new Date();
-            const formattedDate = today.toISOString().split('T')[0];
-            document.getElementById("tarikh").value = formattedDate;
-            janaSurat(); // Generate letter with default values on page load
-        }
+        // Tetapkan tarikh default
+        document.getElementById('tarikh').value = new Date().toISOString().split('T')[0];
+        janaSurat();
     </script>
 </body>
 </html>
