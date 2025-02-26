@@ -3,507 +3,355 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Surat Rasmi</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Penjana Surat Rasmi</title>
     <style>
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --accent-color: #dbeafe;
-            --text-color: #1f2937;
-            --light-bg: #f8fafc;
-            --dark-bg: #f1f5f9;
-            --border-color: #cbd5e1;
-        }
-        
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            margin: 0; 
-            padding: 20px; 
-            background: linear-gradient(120deg, #e0f2fe, #f1f5f9);
-            color: var(--text-color);
-            min-height: 100vh;
-            transition: background 0.3s;
-        }
-        
-        .container { 
-            max-width: 800px; 
-            margin: 20px auto; 
-            background: white; 
-            padding: 30px; 
-            border-radius: 12px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--accent-color);
-        }
-        
-        h2 { 
-            color: var(--primary-color);
+        /* Global Styles */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
             margin: 0;
-            font-size: 28px;
-        }
-        
-        .form-section {
-            margin-bottom: 20px;
-            background: var(--light-bg);
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary-color);
-        }
-        
-        .dynamic-field {
-            display: none;
-            animation: fadeIn 0.3s;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* Header Styles */
+        header {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: 4px solid #0056b3;
         }
-        
-        label { 
+
+        /* Container Styles */
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
             display: block;
-            margin: 10px 0 5px;
+            font-size: 16px;
             font-weight: 500;
+            margin-bottom: 8px;
+            color: #555;
         }
-        
-        input, textarea, select {
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            margin-bottom: 15px;
-            transition: border-color 0.3s;
-        }
-        
-        .button-group {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-        
-        button {
             padding: 12px;
-            background: var(--primary-color);
-            color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #333;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #007BFF;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* Button Styles */
+        button {
+            display: inline-block;
+            margin: 10px 5px;
+            padding: 12px 24px;
+            background-color: #007BFF;
+            color: #fff;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background-color 0.3s ease;
         }
-        
-        .theme-picker {
-            text-align: right;
-            margin: 10px 0;
+
+        button:hover {
+            background-color: #0056b3;
         }
-        
-        .theme-btn {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin: 5px;
-            cursor: pointer;
+
+        /* Preview Styles */
+        #preview {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none; /* Sembunyikan preview secara default */
+        }
+
+        #preview h2 {
+            margin-top: 0;
+            color: #007BFF;
+        }
+
+        /* Footer Styles */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #777;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
+                margin: 20px;
             }
 
-            .button-group {
-                grid-template-columns: 1fr;
-            }
-
-            h2 {
-                font-size: 24px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-            }
-
-            h2 {
+            header {
                 font-size: 20px;
+                padding: 15px;
             }
 
-            .form-section {
-                padding: 15px;
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px 20px;
             }
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h2>Generator Surat Rasmi</h2>
-            <div class="theme-picker">
-                <button class="theme-btn" style="background: #2563eb" onclick="tukarTema('biru')"></button>
-                <button class="theme-btn" style="background: #10b981" onclick="tukarTema('hijau')"></button>
-                <button class="theme-btn" style="background: #ef4444" onclick="tukarTema('merah')"></button>
-            </div>
-        </div>
 
-        <!-- Panduan Penggunaan -->
-        <div class="form-section">
-            <h3>Panduan Penggunaan</h3>
-            <ol>
-                <li>Pilih jenis surat yang ingin dihasilkan.</li>
-                <li>Isi maklumat pengirim (nama dan alamat).</li>
-                <li>Isi maklumat penerima (nama dan jawatan).</li>
-                <li>Isi medan tambahan yang muncul berdasarkan jenis surat.</li>
-                <li>Klik "Pratonton" untuk melihat surat sebelum dijana.</li>
-                <li>Klik "Salin" untuk menyalin teks surat.</li>
-                <li>Klik "PDF" untuk memuat turun surat dalam format PDF.</li>
-            </ol>
-        </div>
+<header>
+    Penjana Surat Rasmi
+</header>
 
-        <!-- Pilihan Surat -->
-        <div class="form-section">
-            <label>Pilih Jenis Surat:</label>
-            <select id="jenisSurat" onchange="toggleFields()">
-                <option value="">Sila Pilih</option>
-                <option value="permohonan_kerja">Surat Permohonan Kerja</option>
-                <option value="perletakan_jawatan">Surat Perletakan Jawatan</option>
-                <option value="permohonan_cuti">Surat Permohonan Cuti</option>
-                <option value="tuntutan_ganti_rugi">Surat Tuntutan Ganti Rugi</option>
-                <option value="aduan_rasmi">Surat Aduan Rasmi</option>
-                <option value="jemputan_rasmi">Surat Jemputan Rasmi</option>
-                <option value="rayuan_bantuan">Surat Rayuan Bantuan Kewangan</option>
+<div class="container">
+    <!-- Borang untuk Pengguna -->
+    <form id="suratForm">
+        <div class="form-group">
+            <label for="jenisSurat">Jenis Surat:</label>
+            <select id="jenisSurat" onchange="ubahContohKandungan()" required>
+                <option value="aduan">Surat Aduan</option>
+                <option value="tawaran">Surat Tawaran Kerja</option>
+                <option value="jualbeli">Surat Perjanjian Jual Beli</option>
+                <option value="sewa">Surat Perjanjian Sewa Rumah</option>
+                <option value="kemasukan">Surat Permohonan Kemasukan</option>
+                <option value="jemputan">Surat Jemputan Rasmi</option>
                 <option value="penghargaan">Surat Penghargaan</option>
-                <option value="permohonan_pinjaman">Surat Permohonan Pinjaman</option>
-                <option value="permohonan_projek">Surat Permohonan Projek</option>
-                <option value="pengecualian_bayaran">Surat Pengecualian Bayaran</option>
-                <option value="pindah_sekolah">Surat Pindah Sekolah</option>
-                <option value="tidak_hadir">Surat Tidak Hadir Ke Sekolah</option>
-                <option value="berhenti_kerja">Surat Berhenti Kerja</option>
+                <option value="kerjasama">Surat Permohonan Kerjasama</option>
+                <option value="sebutharga">Surat Sebut Harga</option>
+                <option value="berhentikerja">Surat Berhenti Kerja</option>
             </select>
         </div>
 
-        <!-- Maklumat Asas -->
-        <div class="form-section">
-            <label>Nama Pengirim:</label>
-            <input type="text" id="nama" placeholder="Nama Penuh">
-            
-            <label>Alamat Pengirim:</label>
-            <textarea id="alamat" rows="3" placeholder="Alamat Penuh"></textarea>
-            
-            <label>Tarikh:</label>
-            <input type="date" id="tarikh">
+        <div class="form-group">
+            <label for="namaPengirim">Nama Pengirim:</label>
+            <input type="text" id="namaPengirim" placeholder="Masukkan nama pengirim" required>
         </div>
 
-        <!-- Maklumat Penerima -->
-        <div class="form-section">
-            <label>Nama Penerima:</label>
-            <input type="text" id="penerima" placeholder="Nama Penerima">
-
-            <label>Jawatan Penerima:</label>
-            <select id="jawatanPenerima">
-                <option value="">Pilih Jawatan</option>
-                <option value="Pengarah">Pengarah</option>
-                <option value="Pengurus">Pengurus</option>
-                <option value="Ketua Jabatan">Ketua Jabatan</option>
-                <option value="Pengetua">Pengetua</option>
-                <option value="Guru Besar">Guru Besar</option>
-                <option value="Setiausaha">Setiausaha</option>
-                <option value="Pegawai Eksekutif">Pegawai Eksekutif</option>
-                <option value="Presiden">Presiden</option>
-                <option value="Dekan">Dekan</option>
-                <option value="Profesor">Profesor</option>
-                <option value="Yang DiPertua">Yang DiPertua</option>
-                <option value="custom">Lain-lain...</option>
-            </select>
-
-            <div class="dynamic-field" id="field_customJawatan">
-                <label>Jawatan Khusus:</label>
-                <input type="text" id="customJawatan" placeholder="Masukkan jawatan khusus">
-            </div>
+        <div class="form-group">
+            <label for="namaPenerima">Nama Penerima:</label>
+            <input type="text" id="namaPenerima" placeholder="Masukkan nama penerima" required>
         </div>
 
-        <!-- Medan Dinamik -->
-        <div class="form-section">
-            <div id="dynamicFields">
-                <div class="dynamic-field" id="field_jawatan">
-                    <label>Jawatan Dipohon:</label>
-                    <input type="text" id="jawatan">
-                </div>
-
-                <div class="dynamic-field" id="field_sebab">
-                    <label>Sebab:</label>
-                    <textarea id="sebab" rows="2"></textarea>
-                </div>
-
-                <div class="dynamic-field" id="field_tempoh">
-                    <label>Tempoh:</label>
-                    <input type="text" id="tempoh" placeholder="Contoh: 23/03/2024 - 30/03/2024">
-                </div>
-
-                <div class="dynamic-field" id="field_jumlah">
-                    <label>Jumlah (RM):</label>
-                    <input type="number" id="jumlah">
-                </div>
-
-                <div class="dynamic-field" id="field_acara">
-                    <label>Butiran Acara:</label>
-                    <textarea id="acara" rows="3" placeholder="Tarikh, Masa & Tempat"></textarea>
-                </div>
-            </div>
+        <div class="form-group">
+            <label for="tarikh">Tarikh:</label>
+            <input type="date" id="tarikh" required>
         </div>
 
-        <!-- Output dan Tindakan -->
-        <div class="button-group">
-            <button onclick="pratontonPDF()"><i class="fas fa-eye"></i> Pratonton</button>
-            <button onclick="salinTeks()"><i class="fas fa-copy"></i> Salin</button>
-            <button onclick="janaPDF()"><i class="fas fa-download"></i> PDF</button>
+        <div class="form-group">
+            <label for="isiKandungan1">Isi Kandungan (Perenggan 1):</label>
+            <textarea id="isiKandungan1" placeholder="Masukkan isi kandungan perenggan pertama" required></textarea>
         </div>
 
-        <div id="outputSurat" class="form-section"></div>
+        <div class="form-group">
+            <label for="isiKandungan2">Isi Kandungan (Perenggan 2):</label>
+            <textarea id="isiKandungan2" placeholder="Masukkan isi kandungan perenggan kedua" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="isiKandungan3">Isi Kandungan (Perenggan 3):</label>
+            <textarea id="isiKandungan3" placeholder="Masukkan isi kandungan perenggan ketiga" required></textarea>
+        </div>
+    </form>
+
+    <!-- Butang Preview dan Jana PDF -->
+    <button onclick="previewSurat()">Pratonton Surat</button>
+    <button onclick="generatePDF()">Jana PDF</button>
+
+    <!-- Preview Surat -->
+    <div id="preview">
+        <h2>Pratonton Surat</h2>
+        <p><strong>Jenis Surat:</strong> <span id="previewJenisSurat"></span></p>
+        <p><strong>Kepada:</strong> <span id="previewNamaPenerima"></span></p>
+        <p><strong>Daripada:</strong> <span id="previewNamaPengirim"></span></p>
+        <p><strong>Tarikh:</strong> <span id="previewTarikh"></span></p>
+        <p><strong>Isi Kandungan:</strong></p>
+        <p id="previewIsiKandungan1"></p>
+        <p id="previewIsiKandungan2"></p>
+        <p id="previewIsiKandungan3"></p>
     </div>
+</div>
 
-    <script>
-        // Fungsi Tema
-        function tukarTema(warna) {
-            const root = document.documentElement;
-            const colors = {
-                biru: { primary: '#2563eb', secondary: '#1e40af' },
-                hijau: { primary: '#10b981', secondary: '#059669' },
-                merah: { primary: '#ef4444', secondary: '#dc2626' }
-            };
-            root.style.setProperty('--primary-color', colors[warna].primary);
-            root.style.setProperty('--secondary-color', colors[warna].secondary);
+<div class="footer">
+    Dicipta oleh Mr. Syah @ 2025 - Hak Cipta Terpelihara
+</div>
+
+<!-- Kandungan Surat untuk PDF -->
+<div id="content" style="display: none;">
+    <h1 id="pdfJenisSurat"></h1>
+    <p><strong>Kepada:</strong> <span id="pdfNamaPenerima"></span></p>
+    <p><strong>Daripada:</strong> <span id="pdfNamaPengirim"></span></p>
+    <p><strong>Tarikh:</strong> <span id="pdfTarikh"></span></p>
+    <p><strong>Isi Kandungan:</strong></p>
+    <p id="pdfIsiKandungan1"></p>
+    <p id="pdfIsiKandungan2"></p>
+    <p id="pdfIsiKandungan3"></p>
+</div>
+
+<script>
+    // Fungsi untuk mengubah contoh kandungan berdasarkan jenis surat
+    function ubahContohKandungan() {
+        const jenisSurat = document.getElementById("jenisSurat").value;
+        let contoh1 = "", contoh2 = "", contoh3 = "";
+
+        switch (jenisSurat) {
+            case "aduan":
+                contoh1 = "Dengan hormatnya saya, [Nama Pengadu], ingin membuat aduan mengenai [Isu yang diadukan]. Aduan ini dibuat setelah beberapa kali saya cuba menyelesaikan masalah ini secara peribadi namun tidak berjaya.";
+                contoh2 = "Sebagai makluman, masalah ini telah berlaku sejak [Tarikh Masalah Berlaku] dan telah menyebabkan [Kesan atau Masalah yang Dihadapi]. Saya telah berusaha untuk menghubungi pihak yang bertanggungjawab namun tiada sebarang tindakan yang diambil.";
+                contoh3 = "Oleh itu, saya berharap pihak tuan dapat memberikan perhatian serius terhadap aduan ini dan mengambil tindakan yang perlu. Saya bersedia untuk memberikan sebarang maklumat lanjut jika diperlukan. Terima kasih atas perhatian dan kerjasama pihak tuan.";
+                break;
+            case "tawaran":
+                contoh1 = "Dengan hormatnya, merujuk kepada permohonan kerja yang telah dikemukakan, kami dengan sukacitanya ingin menawarkan jawatan [Jawatan] di [Nama Syarikat]. Tawaran ini adalah berdasarkan kepada kelayakan dan pengalaman yang anda miliki.";
+                contoh2 = "Sebagai sebahagian daripada pasukan kami, anda akan bertanggungjawab untuk [Tanggungjawab Pekerjaan]. Kami yakin bahawa anda akan memberikan sumbangan yang berharga kepada syarikat kami.";
+                contoh3 = "Sila sahkan penerimaan tawaran ini dengan mengembalikan salinan surat ini yang telah ditandatangani sebelum [Tarikh Akhir]. Sekiranya anda mempunyai sebarang pertanyaan, sila hubungi kami di [Nombor Telefon].";
+                break;
+            case "jualbeli":
+                contoh1 = "Dengan ini, kedua-dua pihak bersetuju untuk mengikat perjanjian jual beli bagi [Nama Barang] antara [Nama Penjual] (Penjual) dan [Nama Pembeli] (Pembeli) pada harga [Harga Barang].";
+                contoh2 = "Pembeli bersetuju untuk membayar jumlah tersebut secara tunai/bank dalam masa [Tempoh Bayaran]. Penjual bersetuju untuk menyerahkan barang tersebut dalam keadaan baik dan lengkap.";
+                contoh3 = "Kedua-dua pihak bersetuju untuk mematuhi syarat-syarat yang telah dipersetujui. Sebarang pertikaian akan diselesaikan secara rundingan atau melalui saluran undang-undang yang sah.";
+                break;
+            case "sewa":
+                contoh1 = "Dengan ini, kedua-dua pihak bersetuju untuk mengikat perjanjian sewa rumah di [Alamat Rumah] antara [Nama Tuan Rumah] (Tuan Rumah) dan [Nama Penyewa] (Penyewa) bagi tempoh [Tempoh Sewa] bermula dari [Tarikh Mula] hingga [Tarikh Tamat].";
+                contoh2 = "Penyewa bersetuju untuk membayar sewa bulanan sebanyak [Jumlah Sewa] pada setiap bulan. Pembayaran hendaklah dibuat sebelum atau pada [Tarikh Bayaran] setiap bulan.";
+                contoh3 = "Tuan Rumah bersetuju untuk menyediakan rumah dalam keadaan baik dan selesa untuk didiami. Sebarang kerosakan yang bukan disebabkan oleh Penyewa akan menjadi tanggungjawab Tuan Rumah untuk dibaiki.";
+                break;
+            case "kemasukan":
+                contoh1 = "Dengan hormatnya, saya [Nama Pemohon] ingin memohon untuk kemasukan ke [Nama Institusi] bagi program [Nama Program] yang akan bermula pada [Tarikh Mula].";
+                contoh2 = "Saya telah melengkapkan semua syarat yang diperlukan dan telah menyertakan dokumen-dokumen yang relevan bersama surat ini. Saya berharap pihak tuan dapat mempertimbangkan permohonan saya.";
+                contoh3 = "Sekiranya terdapat sebarang maklumat lanjut yang diperlukan, sila hubungi saya di [Nombor Telefon] atau [Alamat Emel]. Terima kasih atas perhatian dan pertimbangan pihak tuan.";
+                break;
+            case "jemputan":
+                contoh1 = "Dengan hormatnya, kami menjemput [Nama Tetamu] untuk menghadiri [Nama Acara] yang akan diadakan pada [Tarikh Acara] di [Lokasi Acara].";
+                contoh2 = "Acara ini bertujuan untuk [Tujuan Acara] dan kami berharap kehadiran tuan/puan dapat memberikan sumbangan yang bermakna kepada acara ini.";
+                contoh3 = "Sila sahkan kehadiran anda sebelum [Tarikh Sahutan]. Sekiranya terdapat sebarang pertanyaan, sila hubungi kami di [Nombor Telefon].";
+                break;
+            case "penghargaan":
+                contoh1 = "Dengan hormatnya, kami ingin mengucapkan ribuan terima kasih kepada [Nama Penerima] atas sumbangan dan komitmen yang telah diberikan kepada [Nama Organisasi/Syarikat].";
+                contoh2 = "Sumbangan anda telah memberikan impak yang besar kepada [Projek/Inisiatif] dan kami amat menghargai usaha dan dedikasi yang telah ditunjukkan.";
+                contoh3 = "Kami berharap hubungan baik ini akan berterusan pada masa akan datang. Sekali lagi, terima kasih atas segala yang telah dilakukan.";
+                break;
+            case "kerjasama":
+                contoh1 = "Dengan hormatnya, kami dari [Nama Syarikat/Organisasi] ingin memohon untuk menjalin kerjasama dengan [Nama Syarikat/Organisasi] dalam [Projek/Inisiatif].";
+                contoh2 = "Kami percaya bahawa kerjasama ini akan memberikan manfaat kepada kedua-dua pihak dan dapat mencapai matlamat yang telah ditetapkan.";
+                contoh3 = "Sila hubungi kami di [Nombor Telefon] atau [Alamat Emel] untuk perbincangan lanjut. Terima kasih atas pertimbangan pihak tuan.";
+                break;
+            case "sebutharga":
+                contoh1 = "Dengan hormatnya, kami ingin memohon sebut harga bagi [Perkhidmatan/Barang] yang diperlukan oleh [Nama Syarikat/Organisasi].";
+                contoh2 = "Sila berikan butiran harga, terma dan syarat, serta tempoh penghantaran jika berkaitan. Sebarang maklumat lanjut boleh dirujuk dalam lampiran.";
+                contoh3 = "Kami berharap dapat menerima sebut harga daripada pihak tuan sebelum [Tarikh Akhir]. Terima kasih atas kerjasama yang diberikan.";
+                break;
+            case "berhentikerja":
+                contoh1 = "Dengan hormatnya, saya [Nama Pengirim] ingin memaklumkan hasrat saya untuk berhenti kerja di [Nama Syarikat] berkuat kuasa pada [Tarikh Berkuat Kuasa].";
+                contoh2 = "Keputusan ini dibuat setelah saya menimbangkan beberapa faktor peribadi dan profesional. Saya berharap pihak tuan dapat memahami situasi saya.";
+                contoh3 = "Saya ingin mengucapkan ribuan terima kasih atas peluang dan pengalaman yang diberikan selama ini. Saya berharap hubungan baik ini akan berterusan pada masa akan datang.";
+                break;
         }
 
-        // Fungsi Toggle Medan
-        function toggleFields() {
-            const jenis = document.getElementById('jenisSurat').value;
-            const fields = document.querySelectorAll('.dynamic-field');
-            fields.forEach(field => field.style.display = 'none');
+        // Masukkan contoh kandungan ke dalam textarea
+        document.getElementById("isiKandungan1").value = contoh1;
+        document.getElementById("isiKandungan2").value = contoh2;
+        document.getElementById("isiKandungan3").value = contoh3;
+    }
 
-            const fieldMap = {
-                'permohonan_kerja': ['jawatan'],
-                'perletakan_jawatan': ['sebab'],
-                'permohonan_cuti': ['tempoh', 'sebab'],
-                'tuntutan_ganti_rugi': ['jumlah', 'sebab'],
-                'aduan_rasmi': ['sebab'],
-                'jemputan_rasmi': ['acara'],
-                'rayuan_bantuan': ['jumlah', 'sebab'],
-                'penghargaan': ['sebab'],
-                'permohonan_pinjaman': ['jumlah', 'sebab'],
-                'permohonan_projek': ['sebab'],
-                'pengecualian_bayaran': ['sebab'],
-                'pindah_sekolah': ['sebab'],
-                'tidak_hadir': ['sebab'],
-                'berhenti_kerja': ['sebab']
-            };
+    function previewSurat() {
+        // Dapatkan nilai dari borang
+        const jenisSurat = document.getElementById("jenisSurat").value;
+        const namaPengirim = document.getElementById("namaPengirim").value;
+        const namaPenerima = document.getElementById("namaPenerima").value;
+        const tarikh = document.getElementById("tarikh").value;
+        const isiKandungan1 = document.getElementById("isiKandungan1").value;
+        const isiKandungan2 = document.getElementById("isiKandungan2").value;
+        const isiKandungan3 = document.getElementById("isiKandungan3").value;
 
-            if (fieldMap[jenis]) {
-                fieldMap[jenis].forEach(field => {
-                    document.getElementById(`field_${field}`).style.display = 'block';
-                });
-            }
-            janaSurat();
-        }
+        // Masukkan nilai ke dalam preview
+        document.getElementById("previewJenisSurat").innerText = jenisSurat;
+        document.getElementById("previewNamaPenerima").innerText = namaPenerima;
+        document.getElementById("previewNamaPengirim").innerText = namaPengirim;
+        document.getElementById("previewTarikh").innerText = tarikh;
+        document.getElementById("previewIsiKandungan1").innerText = isiKandungan1;
+        document.getElementById("previewIsiKandungan2").innerText = isiKandungan2;
+        document.getElementById("previewIsiKandungan3").innerText = isiKandungan3;
 
-        // Fungsi Jana Surat
-        function janaSurat() {
-            const jenis = document.getElementById('jenisSurat').value;
-            const data = {
-                nama: document.getElementById('nama').value || '[NAMA]',
-                alamat: document.getElementById('alamat').value || '[ALAMAT]',
-                tarikh: document.getElementById('tarikh').value || '[TARIKH]',
-                penerima: document.getElementById('penerima').value || '[PENERIMA]',
-                jawatanPenerima: document.getElementById('jawatanPenerima').value === 'custom' ? 
-                    document.getElementById('customJawatan').value : document.getElementById('jawatanPenerima').value,
-                jawatan: document.getElementById('jawatan').value,
-                sebab: document.getElementById('sebab').value,
-                tempoh: document.getElementById('tempoh').value,
-                jumlah: document.getElementById('jumlah').value,
-                acara: document.getElementById('acara').value
-            };
+        // Tunjukkan preview
+        document.getElementById("preview").style.display = "block";
+    }
 
-            let isi = '';
-            switch(jenis) {
-                case 'permohonan_kerja':
-                    isi = `
-                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
-                        <p>Saya, ${data.nama}, dengan hormatnya ingin memohon jawatan ${data.jawatan} di syarikat tuan/puan. Saya percaya bahawa saya memenuhi kriteria yang diperlukan berdasarkan pengalaman dan kemahiran yang saya miliki.</p>
-                        <p>Saya telah melampirkan resume dan dokumen sokongan untuk pertimbangan tuan/puan. Saya berharap dapat dipanggil untuk temu duga.</p>
-                        <p>Sekian, terima kasih.</p>
-                    `;
-                    break;
+    function generatePDF() {
+        // Dapatkan nilai dari borang
+        const jenisSurat = document.getElementById("jenisSurat").value;
+        const namaPengirim = document.getElementById("namaPengirim").value;
+        const namaPenerima = document.getElementById("namaPenerima").value;
+        const tarikh = document.getElementById("tarikh").value;
+        const isiKandungan1 = document.getElementById("isiKandungan1").value;
+        const isiKandungan2 = document.getElementById("isiKandungan2").value;
+        const isiKandungan3 = document.getElementById("isiKandungan3").value;
 
-                case 'perletakan_jawatan':
-                    isi = `
-                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
-                        <p>Saya, ${data.nama}, ingin memaklumkan hasrat untuk meletakkan jawatan sebagai ${data.jawatan} berkuat kuasa pada ${data.tarikh}.</p>
-                        <p>Alasan saya adalah ${data.sebab}. Saya berharap pihak tuan/puan dapat memahami keputusan ini.</p>
-                        <p>Sekian, terima kasih.</p>
-                    `;
-                    break;
+        // Masukkan nilai ke dalam kandungan PDF
+        document.getElementById("pdfJenisSurat").innerText = jenisSurat;
+        document.getElementById("pdfNamaPenerima").innerText = namaPenerima;
+        document.getElementById("pdfNamaPengirim").innerText = namaPengirim;
+        document.getElementById("pdfTarikh").innerText = tarikh;
+        document.getElementById("pdfIsiKandungan1").innerText = isiKandungan1;
+        document.getElementById("pdfIsiKandungan2").innerText = isiKandungan2;
+        document.getElementById("pdfIsiKandungan3").innerText = isiKandungan3;
 
-                case 'permohonan_cuti':
-                    isi = `
-                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
-                        <p>Saya, ${data.nama}, ingin memohon cuti selama ${data.tempoh} atas sebab ${data.sebab}.</p>
-                        <p>Saya telah memastikan semua tugas semasa akan diselesaikan sebelum cuti saya bermula.</p>
-                        <p>Sekian, terima kasih.</p>
-                    `;
-                    break;
+        // Jana PDF
+        const element = document.getElementById('content');
+        const opt = {
+            margin: 10,
+            filename: 'surat_rasmi.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save();
+    }
+</script>
 
-                case 'tuntutan_ganti_rugi':
-                    isi = `
-                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
-                        <p>Saya, ${data.nama}, ingin membuat tuntutan ganti rugi sebanyak RM${data.jumlah} atas ${data.sebab}.</p>
-                        <p>Saya telah melampirkan dokumen sokongan untuk pertimbangan tuan/puan.</p>
-                        <p>Sekian, terima kasih.</p>
-                    `;
-                    break;
-
-                case 'aduan_rasmi':
-                    isi = `
-                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
-                        <p>Saya, ${data.nama}, ingin membuat aduan rasmi berkenaan ${data.sebab}.</p>
-                        <p>Saya berharap pihak tuan/puan dapat mengambil tindakan segera.</p>
-                        <p>Sekian, terima kasih.</p>
-                    `;
-                    break;
-
-                case 'jemputan_rasmi':
-                    isi = `
-                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
-                        <p>Saya, ${data.nama}, ingin menjemput tuan/puan ke acara berikut:</p>
-                        <p>${data.acara}</p>
-                        <p>Kehadiran tuan/puan amatlah dihargai.</p>
-                        <p>Sekian, terima kasih.</p>
-                    `;
-                    break;
-
-                case 'rayuan_bantuan':
-                    isi = `
-                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
-                        <p>Saya, ${data.nama}, ingin memohon bantuan kewangan sebanyak RM${data.jumlah} atas sebab ${data.sebab}.</p>
-                        <p>Saya telah melampirkan dokumen sokongan untuk pertimbangan tuan/puan.</p>
-                        <p>Sekian, terima kasih.</p>
-                    `;
-                    break;
-
-                case 'penghargaan':
-                    isi = `
-                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
-                        <p>Saya, ${data.nama}, ingin mengucapkan setinggi-tinggi penghargaan kepada tuan/puan atas ${data.sebab}.</p>
-                        <p>Sumbangan dan usaha tuan/puan amatlah dihargai dan telah memberikan impak yang besar kepada kami.</p>
-                        <p>Sekian, terima kasih.</p>
-                    `;
-                    break;
-
-                case 'permohonan_pinjaman':
-                    isi = `
-                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
-                        <p>Saya, ${data.nama}, ingin memohon pinjaman sebanyak RM${data.jumlah} atas sebab ${data.sebab}.</p>
-                        <p>Sekian, terima kasih.</p>
-                    `;
-                    break;
-
-                case 'permohonan_projek':
-                    isi = `
-                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
-                        <p>Saya, ${data.nama}, ingin memohon kelulusan projek ${data.sebab}.</p>
-                        <p>Sekian, terima kasih.</p>
-                    `;
-                    break;
-
-                case 'pengecualian_bayaran':
-                    isi = `
-                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
-                        <p>Saya, ${data.nama}, ingin memohon pengecualian bayaran atas sebab ${data.sebab}.</p>
-                        <p>Sekian, terima kasih.</p>
-                    `;
-                    break;
-
-                case 'pindah_sekolah':
-                    isi = `
-                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
-                        <p>Saya, ${data.nama}, ingin memohon pindah sekolah atas sebab ${data.sebab}.</p>
-                        <p>Sekian, terima kasih.</p>
-                    `;
-                    break;
-
-                case 'tidak_hadir':
-                    isi = `
-                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
-                        <p>Saya, ${data.nama}, ingin memaklumkan ketidakhadiran ke sekolah atas sebab ${data.sebab}.</p>
-                        <p>Sekian, terima kasih.</p>
-                    `;
-                    break;
-
-                case 'berhenti_kerja':
-                    isi = `
-                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
-                        <p>Saya, ${data.nama}, ingin memaklumkan hasrat untuk berhenti kerja atas sebab ${data.sebab}.</p>
-                        <p>Sekian, terima kasih.</p>
-                    `;
-                    break;
-
-                default:
-                    isi = `<p>Sila pilih jenis surat dan isi maklumat yang diperlukan.</p>`;
-            }
-
-            document.getElementById('outputSurat').innerHTML = `
-                <h3>Surat ${document.getElementById('jenisSurat').selectedOptions[0].text}</h3>
-                <p>${data.alamat}</p>
-                <p>Tarikh: ${data.tarikh}</p>
-                <p>Kepada,</p>
-                <p>${data.penerima}</p>
-                <p>${data.jawatanPenerima}</p>
-                <div class="surat-content">${isi}</div>
-                <p>Yang benar,<br>${data.nama}</p>
-            `;
-        }
-
-        // Fungsi Utiliti
-        function salinTeks() {
-            const teks = document.getElementById('outputSurat').innerText;
-            navigator.clipboard.writeText(teks);
-            alert('Teks telah disalin!');
-        }
-
-        function pratontonPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const content = document.getElementById('outputSurat').innerText;
-            const lines = doc.splitTextToSize(content, 180); // Lebar maksimum 180px
-            doc.setFontSize(12);
-            doc.text(lines, 10, 10);
-            doc.output('dataurlnewwindow');
-        }
-
-        function janaPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const content = document.getElementById('outputSurat').innerText;
-            const lines = doc.splitTextToSize(content, 180); // Lebar maksimum 180px
-            doc.setFontSize(12);
-            doc.text(lines, 10, 10);
-            doc.save('surat_rasmi.pdf');
-        }
-
-        // Event Listeners
-        document.querySelectorAll('input, textarea, select').forEach(element => {
-            element.addEventListener('input', janaSurat);
-        });
-
-        // Tetapkan tarikh default
-        document.getElementById('tarikh').value = new Date().toISOString().split('T')[0];
-        janaSurat();
-    </script>
 </body>
 </html>
