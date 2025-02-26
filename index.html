@@ -305,45 +305,101 @@
                 if (jenis === "permohonan") {
                     tajukSurat = "SURAT PERMOHONAN";
                     perkara = "PERMOHONAN";
-                    isi = `Saya, ${nama}, dengan hormatnya ingin memohon pertimbangan daripada pihak tuan/puan berkenaan dengan perkara di atas. Permohonan ini dibuat setelah saya meneliti dan mempertimbangkan segala aspek yang berkaitan dengan teliti.\n\nSebagai makluman, saya telah meneliti segala syarat dan keperluan untuk permohonan ini dan mendapati bahawa saya layak untuk memohon.\n\nSaya juga telah menyediakan segala dokumen sokongan yang diperlukan untuk menyokong permohonan ini.\n\nSaya amat berharap agar pihak tuan/puan dapat memberikan perhatian dan pertimbangan yang sewajarnya terhadap permohonan ini. Segala kerjasama dan bantuan daripada pihak tuan/puan amatlah dihargai dan diucapkan berbanyak terima kasih. Saya juga bersedia untuk memberikan sebarang maklumat tambahan atau penjelasan lanjut sekiranya diperlukan oleh pihak tuan/puan.\n\nSaya berharap agar pihak tuan/puan dapat memberikan maklum balas secepat mungkin agar urusan ini dapat dilaksanakan dengan lancar dan berkesan. Sekian, terima kasih.`;
+                    isi = `
+                        <p>Saya, ${nama}, dengan hormatnya ingin memohon pertimbangan daripada pihak tuan/puan berkenaan dengan perkara di atas. Permohonan ini dibuat setelah saya meneliti dan mempertimbangkan segala aspek yang berkaitan dengan teliti.</p>
+                        <p>Sebagai makluman, saya telah meneliti segala syarat dan keperluan untuk permohonan ini dan mendapati bahawa saya layak untuk memohon. Saya juga telah menyediakan segala dokumen sokongan yang diperlukan untuk menyokong permohonan ini.</p>
+                        <p>Saya amat berharap agar pihak tuan/puan dapat memberikan perhatian dan pertimbangan yang sewajarnya terhadap permohonan ini. Segala kerjasama dan bantuan daripada pihak tuan/puan amatlah dihargai dan diucapkan berbanyak terima kasih. Saya juga bersedia untuk memberikan sebarang maklumat tambahan atau penjelasan lanjut sekiranya diperlukan oleh pihak tuan/puan.</p>
+                        <p>Saya berharap agar pihak tuan/puan dapat memberikan maklum balas secepat mungkin agar urusan ini dapat dilaksanakan dengan lancar dan berkesan. Sekian, terima kasih.</p>
+                    `;
                 } else if (jenis === "aduan") {
                     tajukSurat = "SURAT ADUAN";
                     perkara = "ADUAN";
-                    isi = `Saya, ${nama}, dengan ini ingin membuat aduan rasmi berkenaan dengan perkara di atas. Isu ini telah memberi kesan yang negatif kepada saya dan juga pihak-pihak lain yang terlibat secara langsung dan tidak langsung.\n\nPermasalahan ini bermula pada [nyatakan tarikh/masa] dan telah berlarutan sehingga kini. Antara kesan negatif yang dialami termasuklah [nyatakan kesan-kesan negatif]. Saya telah berusaha untuk menyelesaikan isu ini secara peribadi tetapi tidak berjaya mendapat penyelesaian yang memuaskan.\n\nOleh itu, saya berharap pihak tuan/puan dapat mengambil tindakan segera bagi menyelesaikan masalah ini demi kebaikan semua pihak yang terlibat. Saya ingin mencadangkan beberapa langkah penyelesaian yang boleh dipertimbangkan oleh pihak tuan/puan, iaitu [nyatakan cadangan-cadangan penyelesaian].\n\nSaya amat mengharapkan kerjasama dan tindakan segera daripada pihak tuan/puan dalam menangani isu ini. Segala tindakan yang diambil amatlah dihargai dan diucapkan berbanyak terima kasih. Sekian, terima kasih.`;
+                    isi = `
+                        <p>Saya, ${nama}, dengan ini ingin membuat aduan rasmi berkenaan dengan perkara di atas. Isu ini telah memberi kesan yang negatif kepada saya dan juga pihak-pihak lain yang terlibat secara langsung dan tidak langsung.</p>
+                        <p>Permasalahan ini bermula pada [nyatakan tarikh/masa] dan telah berlarutan sehingga kini. Antara kesan negatif yang dialami termasuklah [nyatakan kesan-kesan negatif]. Saya telah berusaha untuk menyelesaikan isu ini secara peribadi tetapi tidak berjaya mendapat penyelesaian yang memuaskan.</p>
+                        <p>Oleh itu, saya berharap pihak tuan/puan dapat mengambil tindakan segera bagi menyelesaikan masalah ini demi kebaikan semua pihak yang terlibat. Saya ingin mencadangkan beberapa langkah penyelesaian yang boleh dipertimbangkan oleh pihak tuan/puan, iaitu [nyatakan cadangan-cadangan penyelesaian].</p>
+                        <p>Saya amat mengharapkan kerjasama dan tindakan segera daripada pihak tuan/puan dalam menangani isu ini. Segala tindakan yang diambil amatlah dihargai dan diucapkan berbanyak terima kasih. Sekian, terima kasih.</p>
+                    `;
                 } else if (jenis === "jemputan") {
                     tajukSurat = "SURAT JEMPUTAN";
                     perkara = "JEMPUTAN";
-                    isi = `Saya, ${nama}, dengan segala hormatnya ingin menjemput pihak tuan/puan ke majlis berkaitan perkara di atas yang akan diadakan seperti butiran berikut:\n\nTarikh: [nyatakan tarikh]\nMasa: [nyatakan masa]\nTempat: [nyatakan lokasi]\n\nKehadiran pihak tuan/puan amatlah dialu-alukan dan sudah pasti akan memeriahkan lagi majlis ini. Majlis ini diadakan bertujuan untuk [nyatakan tujuan majlis secara terperinci]. Program majlis adalah seperti yang dilampirkan bersama surat ini.\n\nKami berharap kehadiran pihak tuan/puan dapat memberikan sumbangan yang bermakna kepada majlis ini dan juga dapat mengeratkan lagi hubungan antara kedua-dua pihak. Sekiranya pihak tuan/puan mempunyai sebarang pertanyaan, sila hubungi [nyatakan nama dan nombor telefon].\n\nSila sahkan kehadiran pihak tuan/puan sebelum [nyatakan tarikh akhir pengesahan]. Sekian, jemputan ini disampaikan dengan penuh harapan bahawa pihak tuan/puan dapat hadir ke majlis ini. Terima kasih.`;
+                    isi = `
+                        <p>Saya, ${nama}, dengan segala hormatnya ingin menjemput pihak tuan/puan ke majlis berkaitan perkara di atas yang akan diadakan seperti butiran berikut:</p>
+                        <p>Tarikh: [nyatakan tarikh]</p>
+                        <p>Masa: [nyatakan masa]</p>
+                        <p>Tempat: [nyatakan lokasi]</p>
+                        <p>Kehadiran pihak tuan/puan amatlah dialu-alukan dan sudah pasti akan memeriahkan lagi majlis ini. Majlis ini diadakan bertujuan untuk [nyatakan tujuan majlis secara terperinci]. Program majlis adalah seperti yang dilampirkan bersama surat ini.</p>
+                        <p>Kami berharap kehadiran pihak tuan/puan dapat memberikan sumbangan yang bermakna kepada majlis ini dan juga dapat mengeratkan lagi hubungan antara kedua-dua pihak. Sekiranya pihak tuan/puan mempunyai sebarang pertanyaan, sila hubungi [nyatakan nama dan nombor telefon].</p>
+                        <p>Sila sahkan kehadiran pihak tuan/puan sebelum [nyatakan tarikh akhir pengesahan]. Sekian, jemputan ini disampaikan dengan penuh harapan bahawa pihak tuan/puan dapat hadir ke majlis ini. Terima kasih.</p>
+                    `;
                 } else if (jenis === "rayuan") {
                     tajukSurat = "SURAT RAYUAN";
                     perkara = "RAYUAN";
-                    isi = `Saya, ${nama}, dengan rendah hati ingin mengemukakan rayuan berkenaan dengan perkara di atas. Rayuan ini dibuat setelah saya meneliti dan mempertimbangkan segala aspek yang berkaitan dengan teliti dan mendalam.\n\nSebagai makluman, saya telah menerima keputusan yang dibuat pada [nyatakan tarikh keputusan]. Walau bagaimanapun, saya percaya bahawa keputusan tersebut perlu dinilai semula berdasarkan faktor-faktor berikut: [nyatakan faktor-faktor yang menyokong rayuan].\n\nSaya berharap pihak tuan/puan dapat mempertimbangkan semula keputusan yang telah dibuat dan memberikan pertimbangan yang sewajarnya terhadap rayuan ini. Saya juga ingin mencadangkan beberapa langkah penyelesaian yang boleh dipertimbangkan, iaitu [nyatakan cadangan-cadangan penyelesaian].\n\nSaya amat mengharapkan belas ihsan, kerjasama dan pertimbangan daripada pihak tuan/puan dalam hal ini. Segala tindakan dan pertimbangan yang diberikan amatlah dihargai dan diucapkan berbanyak terima kasih. Sekian, terima kasih.`;
+                    isi = `
+                        <p>Saya, ${nama}, dengan rendah hati ingin mengemukakan rayuan berkenaan dengan perkara di atas. Rayuan ini dibuat setelah saya meneliti dan mempertimbangkan segala aspek yang berkaitan dengan teliti dan mendalam.</p>
+                        <p>Sebagai makluman, saya telah menerima keputusan yang dibuat pada [nyatakan tarikh keputusan]. Walau bagaimanapun, saya percaya bahawa keputusan tersebut perlu dinilai semula berdasarkan faktor-faktor berikut: [nyatakan faktor-faktor yang menyokong rayuan].</p>
+                        <p>Saya berharap pihak tuan/puan dapat mempertimbangkan semula keputusan yang telah dibuat dan memberikan pertimbangan yang sewajarnya terhadap rayuan ini. Saya juga ingin mencadangkan beberapa langkah penyelesaian yang boleh dipertimbangkan, iaitu [nyatakan cadangan-cadangan penyelesaian].</p>
+                        <p>Saya amat mengharapkan belas ihsan, kerjasama dan pertimbangan daripada pihak tuan/puan dalam hal ini. Segala tindakan dan pertimbangan yang diberikan amatlah dihargai dan diucapkan berbanyak terima kasih. Sekian, terima kasih.</p>
+                    `;
                 } else if (jenis === "penghargaan") {
                     tajukSurat = "SURAT PENGHARGAAN";
                     perkara = "PENGHARGAAN";
-                    isi = `Saya, ${nama}, dengan ini ingin merakamkan setinggi-tinggi penghargaan dan ucapan terima kasih kepada pihak tuan/puan atas segala usaha, bantuan dan sumbangan yang telah diberikan berkaitan dengan perkara di atas. Jasa dan pengorbanan pihak tuan/puan amatlah dihargai dan akan dikenang sepanjang masa.\n\nPihak tuan/puan telah memberikan sumbangan yang sangat bermakna dalam [nyatakan konteks sumbangan] yang telah membawa kepada kejayaan [nyatakan pencapaian atau hasil]. Tanpa sokongan dan kerjasama daripada pihak tuan/puan, sudah pasti kami tidak akan dapat mencapai kejayaan seperti yang telah dicapai.\n\nSaya juga ingin mengambil kesempatan ini untuk menyatakan bahawa sokongan dan kerjasama daripada pihak tuan/puan telah memberikan impak yang sangat positif kepada [nyatakan kesan positif secara terperinci]. Kami berharap agar hubungan kerjasama yang telah terjalin antara kedua-dua pihak dapat diteruskan pada masa hadapan.\n\nSekali lagi, sekalung penghargaan dan jutaan terima kasih diucapkan kepada pihak tuan/puan atas segala bantuan dan sokongan yang telah diberikan. Semoga hubungan baik ini akan terus berkekalan dan semakin erat pada masa akan datang. Sekian, terima kasih.`;
+                    isi = `
+                        <p>Saya, ${nama}, dengan ini ingin merakamkan setinggi-tinggi penghargaan dan ucapan terima kasih kepada pihak tuan/puan atas segala usaha, bantuan dan sumbangan yang telah diberikan berkaitan dengan perkara di atas. Jasa dan pengorbanan pihak tuan/puan amatlah dihargai dan akan dikenang sepanjang masa.</p>
+                        <p>Pihak tuan/puan telah memberikan sumbangan yang sangat bermakna dalam [nyatakan konteks sumbangan] yang telah membawa kepada kejayaan [nyatakan pencapaian atau hasil]. Tanpa sokongan dan kerjasama daripada pihak tuan/puan, sudah pasti kami tidak akan dapat mencapai kejayaan seperti yang telah dicapai.</p>
+                        <p>Saya juga ingin mengambil kesempatan ini untuk menyatakan bahawa sokongan dan kerjasama daripada pihak tuan/puan telah memberikan impak yang sangat positif kepada [nyatakan kesan positif secara terperinci]. Kami berharap agar hubungan kerjasama yang telah terjalin antara kedua-dua pihak dapat diteruskan pada masa hadapan.</p>
+                        <p>Sekali lagi, sekalung penghargaan dan jutaan terima kasih diucapkan kepada pihak tuan/puan atas segala bantuan dan sokongan yang telah diberikan. Semoga hubungan baik ini akan terus berkekalan dan semakin erat pada masa akan datang. Sekian, terima kasih.</p>
+                    `;
                 }
             } else if (bahasa === "en") {
                 if (jenis === "permohonan") {
                     tajukSurat = "APPLICATION LETTER";
                     perkara = "APPLICATION";
-                    isi = `I, ${nama}, respectfully wish to request consideration from you regarding the above matter. This application is made after I have thoroughly reviewed and considered all relevant aspects.\n\nFor your information, I have examined all the requirements and criteria for this application and found that I am eligible to apply. I have also prepared all the necessary supporting documents to strengthen this application.\n\nI sincerely hope that you can give due attention and consideration to this application. Any cooperation and assistance from you is greatly appreciated and I extend my heartfelt thanks. I am also ready to provide any additional information or further clarification if required by you.\n\nI hope that you can provide feedback as soon as possible so that this matter can be carried out smoothly and effectively. Thank you.`;
+                    isi = `
+                        <p>I, ${nama}, respectfully wish to request consideration from you regarding the above matter. This application is made after I have thoroughly reviewed and considered all relevant aspects.</p>
+                        <p>For your information, I have examined all the requirements and criteria for this application and found that I am eligible to apply. I have also prepared all the necessary supporting documents to strengthen this application.</p>
+                        <p>I sincerely hope that you can give due attention and consideration to this application. Any cooperation and assistance from you is greatly appreciated and I extend my heartfelt thanks. I am also ready to provide any additional information or further clarification if required by you.</p>
+                        <p>I hope that you can provide feedback as soon as possible so that this matter can be carried out smoothly and effectively. Thank you.</p>
+                    `;
                 } else if (jenis === "aduan") {
                     tajukSurat = "COMPLAINT LETTER";
                     perkara = "COMPLAINT";
-                    isi = `I, ${nama}, hereby wish to make an official complaint regarding the above matter. This issue has had a negative impact on me and other parties involved, both directly and indirectly.\n\nThis problem began on [state date/time] and has persisted until now. Among the negative effects experienced include [state negative effects]. I have attempted to resolve this issue personally but have not been able to reach a satisfactory resolution.\n\nTherefore, I hope that you can take immediate action to resolve this issue for the benefit of all parties involved. I would like to suggest several solutions that can be considered by you, namely [state suggested solutions].\n\nI greatly appreciate your cooperation and prompt action in addressing this issue. Any action taken is highly appreciated and I extend my sincere thanks. Thank you.`;
+                    isi = `
+                        <p>I, ${nama}, hereby wish to make an official complaint regarding the above matter. This issue has had a negative impact on me and other parties involved, both directly and indirectly.</p>
+                        <p>This problem began on [state date/time] and has persisted until now. Among the negative effects experienced include [state negative effects]. I have attempted to resolve this issue personally but have not been able to reach a satisfactory resolution.</p>
+                        <p>Therefore, I hope that you can take immediate action to resolve this issue for the benefit of all parties involved. I would like to suggest several solutions that can be considered by you, namely [state suggested solutions].</p>
+                        <p>I greatly appreciate your cooperation and prompt action in addressing this issue. Any action taken is highly appreciated and I extend my sincere thanks. Thank you.</p>
+                    `;
                 } else if (jenis === "jemputan") {
                     tajukSurat = "INVITATION LETTER";
                     perkara = "INVITATION";
-                    isi = `I, ${nama}, respectfully wish to invite you to the event regarding the above matter which will be held with the following details:\n\nDate: [state date]\nTime: [state time]\nVenue: [state location]\n\nYour presence is greatly welcomed and will certainly enliven this event. This event is held for the purpose of [state the purpose of the event in detail]. The program of the event is as attached with this letter.\n\nWe hope that your presence can provide a meaningful contribution to this event and also strengthen the relationship between both parties. If you have any inquiries, please contact [state name and phone number].\n\nPlease confirm your attendance before [state confirmation deadline]. This invitation is extended with full hope that you will be able to attend this event. Thank you.`;
+                    isi = `
+                        <p>I, ${nama}, respectfully wish to invite you to the event regarding the above matter which will be held with the following details:</p>
+                        <p>Date: [state date]</p>
+                        <p>Time: [state time]</p>
+                        <p>Venue: [state location]</p>
+                        <p>Your presence is greatly welcomed and will certainly enliven this event. This event is held for the purpose of [state the purpose of the event in detail]. The program of the event is as attached with this letter.</p>
+                        <p>We hope that your presence can provide a meaningful contribution to this event and also strengthen the relationship between both parties. If you have any inquiries, please contact [state name and phone number].</p>
+                        <p>Please confirm your attendance before [state confirmation deadline]. This invitation is extended with full hope that you will be able to attend this event. Thank you.</p>
+                    `;
                 } else if (jenis === "rayuan") {
                     tajukSurat = "APPEAL LETTER";
                     perkara = "APPEAL";
-                    isi = `I, ${nama}, humbly wish to submit an appeal regarding the above matter. This appeal is made after I have thoroughly and carefully reviewed and considered all relevant aspects.\n\nFor your information, I received the decision made on [state date of decision]. However, I believe that the decision should be reassessed based on the following factors: [state factors supporting the appeal].\n\nI hope that you can reconsider the decision that was made and give due consideration to this appeal. I would also like to suggest several solutions that can be considered, namely [state suggested solutions].\n\nI sincerely hope for your compassion, cooperation, and consideration in this matter. Any action and consideration given is highly appreciated and I extend my heartfelt thanks. Thank you.`;
+                    isi = `
+                        <p>I, ${nama}, humbly wish to submit an appeal regarding the above matter. This appeal is made after I have thoroughly and carefully reviewed and considered all relevant aspects.</p>
+                        <p>For your information, I received the decision made on [state date of decision]. However, I believe that the decision should be reassessed based on the following factors: [state factors supporting the appeal].</p>
+                        <p>I hope that you can reconsider the decision that was made and give due consideration to this appeal. I would also like to suggest several solutions that can be considered, namely [state suggested solutions].</p>
+                        <p>I sincerely hope for your compassion, cooperation, and consideration in this matter. Any action and consideration given is highly appreciated and I extend my heartfelt thanks. Thank you.</p>
+                    `;
                 } else if (jenis === "penghargaan") {
                     tajukSurat = "APPRECIATION LETTER";
                     perkara = "APPRECIATION";
-                    isi = `I, ${nama}, hereby wish to express my highest appreciation and gratitude to you for all the efforts, assistance, and contributions that have been made regarding the above matter. Your services and sacrifices are greatly appreciated and will be remembered always.\n\nYou have provided a very meaningful contribution in [state context of contribution] which has led to the success of [state achievement or outcome]. Without your support and cooperation, we certainly would not have been able to achieve the success that has been achieved.\n\nI would also like to take this opportunity to state that your support and cooperation have had a very positive impact on [state positive impact in detail]. We hope that the cooperative relationship that has been established between both parties can continue in the future.\n\nOnce again, I extend my appreciation and millions of thanks to you for all the help and support that has been given. May this good relationship continue to be preserved and strengthened in the future. Thank you.`;
+                    isi = `
+                        <p>I, ${nama}, hereby wish to express my highest appreciation and gratitude to you for all the efforts, assistance, and contributions that have been made regarding the above matter. Your services and sacrifices are greatly appreciated and will be remembered always.</p>
+                        <p>You have provided a very meaningful contribution in [state context of contribution] which has led to the success of [state achievement or outcome]. Without your support and cooperation, we certainly would not have been able to achieve the success that has been achieved.</p>
+                        <p>I would also like to take this opportunity to state that your support and cooperation have had a very positive impact on [state positive impact in detail]. We hope that the cooperative relationship that has been established between both parties can continue in the future.</p>
+                        <p>Once again, I extend my appreciation and millions of thanks to you for all the help and support that has been given. May this good relationship continue to be preserved and strengthened in the future. Thank you.</p>
+                    `;
                 }
             }
             
@@ -368,7 +424,7 @@
             
             template += `</p>
                 <p><strong>Perkara: ${perkara}</strong></p>
-                <p class="surat-content">${isi}</p>
+                <div class="surat-content">${isi}</div>
                 <p>Yang benar,<br>${nama}</p>
             `;
             
