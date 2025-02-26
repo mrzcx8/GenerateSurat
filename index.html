@@ -111,6 +111,35 @@
             margin: 5px;
             cursor: pointer;
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .form-section {
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -122,6 +151,20 @@
                 <button class="theme-btn" style="background: #10b981" onclick="tukarTema('hijau')"></button>
                 <button class="theme-btn" style="background: #ef4444" onclick="tukarTema('merah')"></button>
             </div>
+        </div>
+
+        <!-- Panduan Penggunaan -->
+        <div class="form-section">
+            <h3>Panduan Penggunaan</h3>
+            <ol>
+                <li>Pilih jenis surat yang ingin dihasilkan.</li>
+                <li>Isi maklumat pengirim (nama dan alamat).</li>
+                <li>Isi maklumat penerima (nama dan jawatan).</li>
+                <li>Isi medan tambahan yang muncul berdasarkan jenis surat.</li>
+                <li>Klik "Pratonton" untuk melihat surat sebelum dijana.</li>
+                <li>Klik "Salin" untuk menyalin teks surat.</li>
+                <li>Klik "PDF" untuk memuat turun surat dalam format PDF.</li>
+            </ol>
         </div>
 
         <!-- Pilihan Surat -->
@@ -136,7 +179,7 @@
                 <option value="aduan_rasmi">Surat Aduan Rasmi</option>
                 <option value="jemputan_rasmi">Surat Jemputan Rasmi</option>
                 <option value="rayuan_bantuan">Surat Rayuan Bantuan Kewangan</option>
-                <option value="penghargaan_staf">Surat Penghargaan kepada Staf</option>
+                <option value="penghargaan">Surat Penghargaan</option>
                 <option value="permohonan_pinjaman">Surat Permohonan Pinjaman</option>
                 <option value="permohonan_projek">Surat Permohonan Projek</option>
                 <option value="pengecualian_bayaran">Surat Pengecualian Bayaran</option>
@@ -156,6 +199,34 @@
             
             <label>Tarikh:</label>
             <input type="date" id="tarikh">
+        </div>
+
+        <!-- Maklumat Penerima -->
+        <div class="form-section">
+            <label>Nama Penerima:</label>
+            <input type="text" id="penerima" placeholder="Nama Penerima">
+
+            <label>Jawatan Penerima:</label>
+            <select id="jawatanPenerima">
+                <option value="">Pilih Jawatan</option>
+                <option value="Pengarah">Pengarah</option>
+                <option value="Pengurus">Pengurus</option>
+                <option value="Ketua Jabatan">Ketua Jabatan</option>
+                <option value="Pengetua">Pengetua</option>
+                <option value="Guru Besar">Guru Besar</option>
+                <option value="Setiausaha">Setiausaha</option>
+                <option value="Pegawai Eksekutif">Pegawai Eksekutif</option>
+                <option value="Presiden">Presiden</option>
+                <option value="Dekan">Dekan</option>
+                <option value="Profesor">Profesor</option>
+                <option value="Yang DiPertua">Yang DiPertua</option>
+                <option value="custom">Lain-lain...</option>
+            </select>
+
+            <div class="dynamic-field" id="field_customJawatan">
+                <label>Jawatan Khusus:</label>
+                <input type="text" id="customJawatan" placeholder="Masukkan jawatan khusus">
+            </div>
         </div>
 
         <!-- Medan Dinamik -->
@@ -225,6 +296,7 @@
                 'aduan_rasmi': ['sebab'],
                 'jemputan_rasmi': ['acara'],
                 'rayuan_bantuan': ['jumlah', 'sebab'],
+                'penghargaan': ['sebab'],
                 'permohonan_pinjaman': ['jumlah', 'sebab'],
                 'permohonan_projek': ['sebab'],
                 'pengecualian_bayaran': ['sebab'],
@@ -248,6 +320,9 @@
                 nama: document.getElementById('nama').value || '[NAMA]',
                 alamat: document.getElementById('alamat').value || '[ALAMAT]',
                 tarikh: document.getElementById('tarikh').value || '[TARIKH]',
+                penerima: document.getElementById('penerima').value || '[PENERIMA]',
+                jawatanPenerima: document.getElementById('jawatanPenerima').value === 'custom' ? 
+                    document.getElementById('customJawatan').value : document.getElementById('jawatanPenerima').value,
                 jawatan: document.getElementById('jawatan').value,
                 sebab: document.getElementById('sebab').value,
                 tempoh: document.getElementById('tempoh').value,
@@ -259,7 +334,7 @@
             switch(jenis) {
                 case 'permohonan_kerja':
                     isi = `
-                        <p>Yang Dihormati,</p>
+                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
                         <p>Saya, ${data.nama}, dengan hormatnya ingin memohon jawatan ${data.jawatan} di syarikat tuan/puan. Saya percaya bahawa saya memenuhi kriteria yang diperlukan berdasarkan pengalaman dan kemahiran yang saya miliki.</p>
                         <p>Saya telah melampirkan resume dan dokumen sokongan untuk pertimbangan tuan/puan. Saya berharap dapat dipanggil untuk temu duga.</p>
                         <p>Sekian, terima kasih.</p>
@@ -268,7 +343,7 @@
 
                 case 'perletakan_jawatan':
                     isi = `
-                        <p>Yang Dihormati,</p>
+                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
                         <p>Saya, ${data.nama}, ingin memaklumkan hasrat untuk meletakkan jawatan sebagai ${data.jawatan} berkuat kuasa pada ${data.tarikh}.</p>
                         <p>Alasan saya adalah ${data.sebab}. Saya berharap pihak tuan/puan dapat memahami keputusan ini.</p>
                         <p>Sekian, terima kasih.</p>
@@ -277,7 +352,7 @@
 
                 case 'permohonan_cuti':
                     isi = `
-                        <p>Yang Dihormati,</p>
+                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
                         <p>Saya, ${data.nama}, ingin memohon cuti selama ${data.tempoh} atas sebab ${data.sebab}.</p>
                         <p>Saya telah memastikan semua tugas semasa akan diselesaikan sebelum cuti saya bermula.</p>
                         <p>Sekian, terima kasih.</p>
@@ -286,7 +361,7 @@
 
                 case 'tuntutan_ganti_rugi':
                     isi = `
-                        <p>Yang Dihormati,</p>
+                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
                         <p>Saya, ${data.nama}, ingin membuat tuntutan ganti rugi sebanyak RM${data.jumlah} atas ${data.sebab}.</p>
                         <p>Saya telah melampirkan dokumen sokongan untuk pertimbangan tuan/puan.</p>
                         <p>Sekian, terima kasih.</p>
@@ -295,7 +370,7 @@
 
                 case 'aduan_rasmi':
                     isi = `
-                        <p>Yang Dihormati,</p>
+                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
                         <p>Saya, ${data.nama}, ingin membuat aduan rasmi berkenaan ${data.sebab}.</p>
                         <p>Saya berharap pihak tuan/puan dapat mengambil tindakan segera.</p>
                         <p>Sekian, terima kasih.</p>
@@ -304,7 +379,7 @@
 
                 case 'jemputan_rasmi':
                     isi = `
-                        <p>Yang Dihormati,</p>
+                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
                         <p>Saya, ${data.nama}, ingin menjemput tuan/puan ke acara berikut:</p>
                         <p>${data.acara}</p>
                         <p>Kehadiran tuan/puan amatlah dihargai.</p>
@@ -314,24 +389,25 @@
 
                 case 'rayuan_bantuan':
                     isi = `
-                        <p>Yang Dihormati,</p>
+                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
                         <p>Saya, ${data.nama}, ingin memohon bantuan kewangan sebanyak RM${data.jumlah} atas sebab ${data.sebab}.</p>
                         <p>Saya telah melampirkan dokumen sokongan untuk pertimbangan tuan/puan.</p>
                         <p>Sekian, terima kasih.</p>
                     `;
                     break;
 
-                case 'penghargaan_staf':
+                case 'penghargaan':
                     isi = `
-                        <p>Yang Dihormati,</p>
-                        <p>Saya, ${data.nama}, ingin mengucapkan penghargaan kepada ${data.jawatan} atas ${data.sebab}.</p>
+                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
+                        <p>Saya, ${data.nama}, ingin mengucapkan setinggi-tinggi penghargaan kepada tuan/puan atas ${data.sebab}.</p>
+                        <p>Sumbangan dan usaha tuan/puan amatlah dihargai dan telah memberikan impak yang besar kepada kami.</p>
                         <p>Sekian, terima kasih.</p>
                     `;
                     break;
 
                 case 'permohonan_pinjaman':
                     isi = `
-                        <p>Yang Dihormati,</p>
+                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
                         <p>Saya, ${data.nama}, ingin memohon pinjaman sebanyak RM${data.jumlah} atas sebab ${data.sebab}.</p>
                         <p>Sekian, terima kasih.</p>
                     `;
@@ -339,7 +415,7 @@
 
                 case 'permohonan_projek':
                     isi = `
-                        <p>Yang Dihormati,</p>
+                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
                         <p>Saya, ${data.nama}, ingin memohon kelulusan projek ${data.sebab}.</p>
                         <p>Sekian, terima kasih.</p>
                     `;
@@ -347,7 +423,7 @@
 
                 case 'pengecualian_bayaran':
                     isi = `
-                        <p>Yang Dihormati,</p>
+                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
                         <p>Saya, ${data.nama}, ingin memohon pengecualian bayaran atas sebab ${data.sebab}.</p>
                         <p>Sekian, terima kasih.</p>
                     `;
@@ -355,7 +431,7 @@
 
                 case 'pindah_sekolah':
                     isi = `
-                        <p>Yang Dihormati,</p>
+                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
                         <p>Saya, ${data.nama}, ingin memohon pindah sekolah atas sebab ${data.sebab}.</p>
                         <p>Sekian, terima kasih.</p>
                     `;
@@ -363,7 +439,7 @@
 
                 case 'tidak_hadir':
                     isi = `
-                        <p>Yang Dihormati,</p>
+                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
                         <p>Saya, ${data.nama}, ingin memaklumkan ketidakhadiran ke sekolah atas sebab ${data.sebab}.</p>
                         <p>Sekian, terima kasih.</p>
                     `;
@@ -371,7 +447,7 @@
 
                 case 'berhenti_kerja':
                     isi = `
-                        <p>Yang Dihormati,</p>
+                        <p>Yang Dihormati ${data.jawatanPenerima},</p>
                         <p>Saya, ${data.nama}, ingin memaklumkan hasrat untuk berhenti kerja atas sebab ${data.sebab}.</p>
                         <p>Sekian, terima kasih.</p>
                     `;
@@ -385,6 +461,9 @@
                 <h3>Surat ${document.getElementById('jenisSurat').selectedOptions[0].text}</h3>
                 <p>${data.alamat}</p>
                 <p>Tarikh: ${data.tarikh}</p>
+                <p>Kepada,</p>
+                <p>${data.penerima}</p>
+                <p>${data.jawatanPenerima}</p>
                 <div class="surat-content">${isi}</div>
                 <p>Yang benar,<br>${data.nama}</p>
             `;
@@ -400,14 +479,20 @@
         function pratontonPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            doc.text(document.getElementById('outputSurat').innerText, 10, 10);
+            const content = document.getElementById('outputSurat').innerText;
+            const lines = doc.splitTextToSize(content, 180); // Lebar maksimum 180px
+            doc.setFontSize(12);
+            doc.text(lines, 10, 10);
             doc.output('dataurlnewwindow');
         }
 
         function janaPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            doc.text(document.getElementById('outputSurat').innerText, 10, 10);
+            const content = document.getElementById('outputSurat').innerText;
+            const lines = doc.splitTextToSize(content, 180); // Lebar maksimum 180px
+            doc.setFontSize(12);
+            doc.text(lines, 10, 10);
             doc.save('surat_rasmi.pdf');
         }
 
