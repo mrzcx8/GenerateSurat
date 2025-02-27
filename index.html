@@ -340,8 +340,11 @@
         document.getElementById("pdfIsiKandungan2").innerText = isiKandungan2;
         document.getElementById("pdfIsiKandungan3").innerText = isiKandungan3;
 
+        // Paparkan elemen PDF sementara
+        const contentElement = document.getElementById("content");
+        contentElement.style.display = "block";
+
         // Jana PDF
-        const element = document.getElementById('content');
         const opt = {
             margin: 10,
             filename: 'surat_rasmi.pdf',
@@ -349,7 +352,11 @@
             html2canvas: { scale: 2 },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
-        html2pdf().set(opt).from(element).save();
+
+        html2pdf().set(opt).from(contentElement).save().then(() => {
+            // Sembunyikan elemen PDF selepas menjana
+            contentElement.style.display = "none";
+        });
     }
 </script>
 
