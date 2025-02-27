@@ -159,7 +159,7 @@
                 <option value="tawaran">Surat Tawaran Kerja</option>
                 <option value="jualbeli">Surat Perjanjian Jual Beli</option>
                 <option value="sewa">Surat Perjanjian Sewa Rumah</option>
-                <option value="kemasukan">Surat Permohonan Kemasukan</option>
+                <option value="kemasukan">Surat Kemasukan</option>
                 <option value="jemputan">Surat Jemputan Rasmi</option>
                 <option value="penghargaan">Surat Penghargaan</option>
                 <option value="kerjasama">Surat Permohonan Kerjasama</option>
@@ -184,18 +184,18 @@
         </div>
 
         <div class="form-group">
-            <label for="isiKandungan1">Isi Kandungan (Perenggan 1):</label>
-            <textarea id="isiKandungan1" placeholder="Masukkan isi kandungan perenggan pertama" required></textarea>
+            <label for="isiKandungan1">Perkara (Perenggan 1):</label>
+            <textarea id="isiKandungan1" placeholder="Masukkan perkara perenggan pertama" required></textarea>
         </div>
 
         <div class="form-group">
-            <label for="isiKandungan2">Isi Kandungan (Perenggan 2):</label>
-            <textarea id="isiKandungan2" placeholder="Masukkan isi kandungan perenggan kedua" required></textarea>
+            <label for="isiKandungan2">Perkara (Perenggan 2):</label>
+            <textarea id="isiKandungan2" placeholder="Masukkan perkara perenggan kedua" required></textarea>
         </div>
 
         <div class="form-group">
-            <label for="isiKandungan3">Isi Kandungan (Perenggan 3):</label>
-            <textarea id="isiKandungan3" placeholder="Masukkan isi kandungan perenggan ketiga" required></textarea>
+            <label for="isiKandungan3">Perkara (Perenggan 3):</label>
+            <textarea id="isiKandungan3" placeholder="Masukkan perkara perenggan ketiga" required></textarea>
         </div>
     </form>
 
@@ -210,7 +210,7 @@
         <p><strong>Kepada:</strong> <span id="previewNamaPenerima"></span></p>
         <p><strong>Daripada:</strong> <span id="previewNamaPengirim"></span></p>
         <p><strong>Tarikh:</strong> <span id="previewTarikh"></span></p>
-        <p><strong>Isi Kandungan:</strong></p>
+        <p><strong>Perkara:</strong></p>
         <p id="previewIsiKandungan1"></p>
         <p id="previewIsiKandungan2"></p>
         <p id="previewIsiKandungan3"></p>
@@ -223,11 +223,11 @@
 
 <!-- Kandungan Surat untuk PDF -->
 <div id="content" style="display: none;">
-    <h1 id="pdfJenisSurat"></h1>
+    <h1 style="text-align: center;" id="pdfJenisSurat">Surat Kemasukan</h1>
     <p><strong>Kepada:</strong> <span id="pdfNamaPenerima"></span></p>
     <p><strong>Daripada:</strong> <span id="pdfNamaPengirim"></span></p>
     <p><strong>Tarikh:</strong> <span id="pdfTarikh"></span></p>
-    <p><strong>Isi Kandungan:</strong></p>
+    <p><strong>Perkara:</strong></p>
     <p id="pdfIsiKandungan1"></p>
     <p id="pdfIsiKandungan2"></p>
     <p id="pdfIsiKandungan3"></p>
